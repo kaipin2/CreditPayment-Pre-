@@ -238,5 +238,44 @@ public class GameControllerScript : MonoBehaviour
         FinishPanel.transform.Find(Const.CO.ScoreGetPhysicalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得体力：" + IntGetPhysical.ToString();
         //消費体力
         FinishPanel.transform.Find(Const.CO.ScoreUsePhysicalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "消費体力：" + IntUsePhysical.ToString();
+        //スコア点数
+        int intScore = ScoreNumberCal();
+        FinishPanel.transform.Find(Const.CO.ScoreNumberTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = intScore.ToString() + "点";
+        //スコアランク
+        FinishPanel.transform.Find(Const.CO.ScoreRankTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = ScoreRankCal(intScore);
+    }
+
+    //スコア計算する関数
+    private int ScoreNumberCal()
+    {
+        //出力用変数
+        int intScore = 0;
+
+        //経過日数×400
+        intScore += 400 * CountDay;
+        //購入金額×1%(少数点以下切り捨て)
+        intScore += (int)(0.01f * IntUseMoney);
+        //取得精神力×10%(少数点以下切り捨て)
+        intScore += (int)(0.1f * IntGetMental);
+        //取得体力×10%(少数点以下切り捨て)
+        intScore += (int)(0.1f * IntGetPhysical);
+
+        return intScore;
+    }
+
+    //スコアランクを計算する関数
+    private string ScoreRankCal(int intScore)
+    {
+        string strScoreRank = "";
+        Debug.Log(Const.CO.RankList[0, 1]);
+        for (int Rank = 0;Rank <  Const.CO.RankList.GetLength(0);Rank++){
+            
+            if(intScore >= int.Parse(Const.CO.RankList[Rank, 1]))
+            {
+                strScoreRank = Const.CO.RankList[Rank, 0];
+                break;
+            }
+        }
+        return strScoreRank;
     }
 }

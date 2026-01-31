@@ -16,8 +16,19 @@ public class ClickButtonScript : MonoBehaviour
         
     }
 
-    public void StartClick()
+    
+    //シーンジャンプする関数
+    public void JumpScene(string Scene)
     {
-        SceneManager.LoadScene(Const.CO.MainGameScene);
+        switch (Scene)
+        {
+            case "Main":
+                SceneManager.LoadScene(Const.CO.MainGameScene);
+                break;
+            case "Title":
+                SceneManager.LoadScene(Const.CO.TitleScene);
+                break;
+        }
+        
     }
 }
