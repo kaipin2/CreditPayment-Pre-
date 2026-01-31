@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 703
+    y: 648
     width: 1481
     height: 283
   m_SerializedDataModeController:
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 43
+    y: 0
     width: 1920
     height: 36
   m_SerializedDataModeController:
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 608
     height: 598
   m_SerializedDataModeController:
@@ -806,8 +806,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "\u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u30FC\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1482
-    y: 79
+    x: 1483
+    y: 24
     width: 437
     height: 907
   m_SerializedDataModeController:
@@ -909,13 +909,7 @@ MonoBehaviour:
       m_Data: 49464
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49284
-    - m_Data: 49394
-    - m_Data: 49400
-    - m_Data: 49462
-    - m_Data: 53854
-    - m_Data: 1000000000
-    - m_Data: 2147483647
+    - m_Data: 49084
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -949,7 +943,7 @@ MonoBehaviour:
       m_Data: 60842
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 49284
+    - m_Data: 49084
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1041,8 +1035,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "\u30B7\u30FC\u30F3\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 609
-    y: 79
+    x: 610
+    y: 24
     width: 871
     height: 598
   m_SerializedDataModeController:

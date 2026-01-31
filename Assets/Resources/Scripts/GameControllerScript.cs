@@ -3,11 +3,12 @@ using System;
 using System.Data.SqlTypes;
 using TMPro;
 using UnityEngine;
-using Const;
-using UnityEditor;  //定数を定義している
+using Const;//定数を定義している
 
 public class GameControllerScript : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject FinishPanel; //ゲーム結果を表示するobject
     [SerializeField]
     private GameObject MoneyPanel; //残金を表示するobject
     [SerializeField]
@@ -30,6 +31,12 @@ public class GameControllerScript : MonoBehaviour
     private int oldPhysical;  //計算前の体力
     private int Physical; //体力
     private int CountDay; //経過日数
+    private int IntGetMoney; //取得金額
+    private int IntUseMoney; //消費金額
+    private int IntGetMental; //取得精神力
+    private int IntUseMental; //消費精神力
+    private int IntGetPhysical; //取得体力
+    private int IntUsePhysical; //消費体力
     private DateTime StartDay;　//初期の日付
     private DateTime CurrentDay;　//現在の日付
     private GameObject ObjGoodsControll; //全商品の親object
@@ -68,7 +75,6 @@ public class GameControllerScript : MonoBehaviour
             IntSalaryDay = 25; //給料日を設定
             IntCreditDay = 15;//クレジットカードの引き落とし日を設定
             IntMonthlyIncome = 10000; //月収を設定
-            CountDay = 0; //経過日数を初期化
             IntCreditMoney = 0; //クレジット使用額を初期化
 
             Money = IntMonthlyIncome; //初期残金を設定
@@ -77,12 +83,23 @@ public class GameControllerScript : MonoBehaviour
             oldMental = Mental; //計算前精神力を設定
             Physical = 20; //初期体力を設定
             oldPhysical = Physical; // 計算前体力を設定
+            
+            //スコア関係の値を初期化
+            CountDay = 0; //経過日数を初期化
+            IntGetMoney = 0;　//取得金額を初期化
+            IntUseMoney = 0; //消費金額を初期化
+            IntGetMental = 0; //取得精神力を初期化
+            IntUseMental = 0; //消費精神力を初期化
+            IntGetPhysical = 0; //取得体力を初期化
+            IntUsePhysical = 0; //消費体力を初期化
         #endregion
 
         #region 設定値を画面に表示
-            ObjSalaryText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntSalaryDay + "日";
+        ObjSalaryText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntSalaryDay + "日";
             ObjWithdrawalText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntCreditDay + "日";
         #endregion
+
+        FinishPanel.GetComponent<Canvas>().enabled = false; // 終了画面を非表示
 
         //商品の配置を行う
         ObjGoodsControll = this.transform.Find(Const.CO.GoodsControllObjectPass).gameObject;
@@ -103,17 +120,23 @@ public class GameControllerScript : MonoBehaviour
     {
 
 
-        //クレジット使用額に購入商品分を足す
-        IntCreditMoney += intPrice;
+        
+        IntCreditMoney += intPrice;　//クレジット使用額に購入商品分を足す
 
         //商品の効果種類によって精神力か体力を更新
-        if(strEffectType == Const.CO.PlayerMentalName)
+        if (strEffectType == Const.CO.PlayerMentalName)
         {
-            Mental += intEffectNumber;
+            Mental += intEffectNumber; //精神力を更新
+            //精神力が減少する場合は消費変数を、増加する場合は取得変数を更新
+            if (intEffectNumber < 0) IntUseMental += Mathf.Abs(intEffectNumber);
+            else if (intEffectNumber > 0) IntGetMental += Mathf.Abs(intEffectNumber);
         }
         else if(strEffectType == Const.CO.PlayerPhysicalName)
         {
-            Physical += intEffectNumber;
+            Physical += intEffectNumber; //体力力を更新
+            //体力が減少する場合は消費変数を、増加する場合は取得変数を更新
+            if (intEffectNumber < 0) IntUsePhysical += Mathf.Abs(intEffectNumber);
+            else if (intEffectNumber > 0) IntGetPhysical += Mathf.Abs(intEffectNumber);
         }
 
         //日付を更新する際の処理
@@ -147,6 +170,9 @@ public class GameControllerScript : MonoBehaviour
         StatusChange(Physical - oldPhysical, ObjChangePhysicalText);
         oldPhysical = Physical; //計算前体力を更新
 
+        //残金、精神力、体力のいずれかが負の場合ゲーム終了
+        if(Money < 0 || Mental < 0 || Physical < 0) GameFinishCheck();
+
     }
 
     //日付を更新する際に処理する関数
@@ -162,12 +188,15 @@ public class GameControllerScript : MonoBehaviour
         {
             Debug.Log($"給料日");
             Money += IntMonthlyIncome;
+            IntGetMoney += IntMonthlyIncome; //取得金額に給料を足す
         }
         //クレジットカード引き落とし日の場合、残金を更新
         if (CurrentDay.Day == IntCreditDay)
         {
             Debug.Log($"引き落とし日");
             Money -= IntCreditMoney;
+            IntUseMoney += IntCreditMoney; //消費金額に現在のクレジット使用量を足す
+            IntCreditMoney = 0; //クレジット使用量を初期化
         }
 
         //画面上のステータスを更新
@@ -187,5 +216,27 @@ public class GameControllerScript : MonoBehaviour
             StatusText.GetComponent<TextMeshProUGUI>().text = Diff.ToString();
             StatusText.GetComponent<Animator>().Play(Const.CO.MinusCahngeStatusAnime);
         }
+    }
+
+    //ゲームが終了している場合の処理
+    private void GameFinishCheck()
+    {
+        FinishPanel.GetComponent<Canvas>().enabled = true; // 終了画面を表示
+
+        //スコア表示
+        //経過日数
+        FinishPanel.transform.Find(Const.CO.ScoreDayTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "経過日数："+CountDay.ToString()+"日";
+        //取得給与
+        FinishPanel.transform.Find(Const.CO.ScoreGetSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得給与：" + IntGetMoney.ToString() + "円";
+        //購入金額
+        FinishPanel.transform.Find(Const.CO.ScoreUseSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "購入金額：" + IntUseMoney.ToString() + "円";
+        //取得精神力
+        FinishPanel.transform.Find(Const.CO.ScoreGetMentalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得精神力：" + IntGetMental.ToString();
+        //消費精神力
+        FinishPanel.transform.Find(Const.CO.ScoreUseMentalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "消費精神力：" + IntUseMental.ToString();
+        //取得体力
+        FinishPanel.transform.Find(Const.CO.ScoreGetPhysicalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得体力：" + IntGetPhysical.ToString();
+        //消費体力
+        FinishPanel.transform.Find(Const.CO.ScoreUsePhysicalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "消費体力：" + IntUsePhysical.ToString();
     }
 }

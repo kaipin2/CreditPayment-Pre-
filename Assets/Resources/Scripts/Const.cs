@@ -68,6 +68,13 @@ namespace Const
             public static string DayTextPass = "DayText"; //現在の日付(日)テキスト、日付Objectとの相対位置
             public static string SalaryTextPass = "SalaryDateText"; //給料日テキスト、SettingObjectとの相対位置
             public static string WithdrawalTextPass = "WithdrawalDateText"; //引き落とし日テキスト、SettingObjectとの相対位置
+            public static string ScoreDayTextPass = "DayText"; //最終スコア(経過日数)テキスト、FinishPanelとの相対位置
+            public static string ScoreGetSalaryTextPass = "GetSalaryText"; //最終スコア(取得給与)テキスト、FinishPanelとの相対位置
+            public static string ScoreUseSalaryTextPass = "UseSalaryText"; //最終スコア(消費給与)テキスト、FinishPanelとの相対位置
+            public static string ScoreGetMentalTextPass = "GetMentalText"; //最終スコア(取得精神力)テキスト、FinishPanelとの相対位置
+            public static string ScoreUseMentalTextPass = "UseMentalText"; //最終スコア(消費精神力)テキスト、FinishPanelとの相対位置
+            public static string ScoreGetPhysicalTextPass = "GetPhysicalText"; //最終スコア(取得体力)テキスト、FinishPanelとの相対位置
+            public static string ScoreUsePhysicalTextPass = "UsePhysicalText"; //最終スコア(消費体力)テキスト、FinishPanelとの相対位置
         #endregion
 
         #region ゲーム上のステータス名
