@@ -1,3 +1,4 @@
+//画面の縦横比を維持するためのスクリプト
 using UnityEngine;
 
 [ExecuteAlways]

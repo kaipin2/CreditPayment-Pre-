@@ -1,0 +1,106 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+namespace Const
+{ 
+    //商品のクラスを生成
+    public  class Goods
+    {
+        private string strName; //商品名
+        private int intPrice; //商品の金額
+        private string strEffectType; //商品の効果種類
+        private int intEffectSize; //商品の効果量
+
+        //商品のステータスを設定する
+        public Goods SetStatus(string argstrName,int argintPrize, string argstrEffectType, int argintEffectSize)
+        {
+            strName = argstrName;
+            intPrice =argintPrize;
+            strEffectType=argstrEffectType;
+            intEffectSize=argintEffectSize;
+            return this;
+        }
+        //商品のステータスを取得する
+        public string GetName()
+        {
+            return this.strName;
+        }
+        public int GetPrice()
+        {
+            return this.intPrice;
+        }
+        public string GetEffectType()
+        {
+            return this.strEffectType;
+        }
+        public int GetEffectSize()
+        {
+            return this.intEffectSize;
+        }
+    }
+    public static class CO
+    {
+        public static string GameVersion = "Ver 1.0.0"; //ゲームのバージョン情報
+
+        #region シーン名
+            public static string TitleScene = "TitleScene"; //タイトルシーンの名称
+            public static string MainGameScene = "MainGameScene"; //メインゲーム画面のシーン名称
+        #endregion
+        #region テキストの色
+        //数字がプラスの時のテキストカラー
+        public static Color PlusColor =  new Color(0, 224, 255, 255);
+            //数字がマイナスの時のテキストカラー
+            public static Color MinusColor = new Color(255, 0, 0, 255);
+            //数字がゼロの時のテキストカラー
+            public static Color ZeroColor = new Color(255, 255, 255, 255);
+        #endregion
+
+        #region object場所
+            public static string GoodsControllObjectPass = "GameCanvas/BackGround/GoodsControllObject"; //全商品の親オブジェクトのGameControllerとの相対位置
+            public static string GoodsNameTextPass = "GoodsName"; //商品名を表示しているテキストGoodsControllObjectとの相対位置    
+            public static string GoodsPriceTextPass = "GoodsPrice/PriceText"; //商品の値段を表示しているテキストGoodsControllObjectとの相対位置
+            public static string GoodsEffectTypeImagePass = "GoodsDetail/Image"; //商品の効果種類を表示している画像GoodsControllObjectとの相対位置
+            public static string GoodsEffectSizeTextPass = "GoodsDetail/GoodsDetailText"; //商品の効果量を表示しているテキストGoodsControllObjectとの相対位置
+            public static string PlayerStatusChangeTextPass = "ChangeText"; //プレイヤーのステータス変化量を表示しているテキスト、ステータスPanelとの相対位置
+            public static string PlayerStatusRestTextPass = "RestText"; //プレイヤーのステータス残量を表示しているテキスト、ステータスPanelとの相対位置
+            public static string YearTextPass = "YearText"; //現在の日付(年)テキスト、日付Objectとの相対位置
+            public static string MonthTextPass = "MonthText"; //現在の日付(月)テキスト、日付Objectとの相対位置
+            public static string DayTextPass = "DayText"; //現在の日付(日)テキスト、日付Objectとの相対位置
+            public static string SalaryTextPass = "SalaryDateText"; //給料日テキスト、SettingObjectとの相対位置
+            public static string WithdrawalTextPass = "WithdrawalDateText"; //引き落とし日テキスト、SettingObjectとの相対位置
+        #endregion
+
+        #region ゲーム上のステータス名
+        public static string PlayerMoneyName = "残金"; //プレイヤーの残高に関するステータス名
+            public static string PlayerMentalName = "精神力"; //プレイヤーの精神力に関するステータス名
+            public static string PlayerPhysicalName = "体力"; //プレイヤーの体力に関するステータス名
+        #endregion
+
+        #region イメージ画像名
+            public static string MoneyImageName = "JCB_CreditCard"; //プレイヤーの残高を表示するための画像名
+            public static string MentalImageName = "Heart"; //プレイヤーの精神力を表示するための画像名
+            public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
+        #endregion
+        #region 商品の種類
+            public static Goods Goods_A = new Goods().SetStatus("商品A",1000, PlayerPhysicalName, 10); //商品A
+            public static Goods Goods_B = new Goods().SetStatus("商品B",300, PlayerPhysicalName, 2); //商品B
+            public static Goods Goods_C = new Goods().SetStatus("商品C",400, PlayerMentalName, -4); //商品C
+        #endregion
+
+        #region 商品のリスト
+            public static List<Goods> GoodsList = new List<Goods>() {
+            Goods_A,
+            Goods_B,
+            Goods_C,
+            };
+        #endregion
+
+        #region アニメーション名
+            public static string OutGoodsAnime = "OutGoods"; //商品が画面外に移動するアニメーション名
+            public static string InGoodsAnime = "InGoods"; //商品が画面内に移動するアニメーション名
+            public static string PlusCahngeStatusAnime = "PlusCahngeStatus"; //プレイヤーのステータスが増加したときに表示するアニメーション名
+            public static string MinusCahngeStatusAnime = "MinusCahngeStatus"; //プレイヤーのステータスが減少したときに表示するアニメーション名
+        #endregion
+    }
+
+}
