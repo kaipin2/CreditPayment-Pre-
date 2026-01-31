@@ -19,6 +19,10 @@ public class GameControllerScript : MonoBehaviour
     private GameObject DayPanel; //体力を表示するobject
     [SerializeField]
     private GameObject SettingPanel; //ゲーム設定を表示するobject
+    [SerializeField]
+    private AudioClip aucStatusDec;　//ステータス減少音
+    [SerializeField]
+    private AudioClip aucStatusInc;　//ステータス増加音
 
     private int IntSalaryDay; // 給料日
     private int IntCreditDay; //クレジットカードの引き落とし日
@@ -51,6 +55,9 @@ public class GameControllerScript : MonoBehaviour
     private GameObject ObjDayText; //現在の日を表示するテキスト
     private GameObject ObjSalaryText; //給料日を表示するテキスト
     private GameObject ObjWithdrawalText; //引き落とし日を表示するテキスト
+    private float CurrentTime = 0f; //現在の経過時間(spanごとにリセット)
+    private float Span = 1f; // リセット間隔
+    private bool blGameFinish = false; //ゲームが終了しているか格納する関数
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -114,13 +121,28 @@ public class GameControllerScript : MonoBehaviour
         DisPlayStatus();
     }
 
-
-    //ステータスの更新処理
-    public void UpdateStatus(int intPrice,string strEffectType,int intEffectNumber)
+    public void Update()
     {
 
 
-        
+        //アニメーション中でない場合、体力を１/s減少
+        if (!ObjGoodsControll.GetComponent<AnimationEndScript>().blAnimation && !blGameFinish)
+        {
+            CurrentTime += Time.deltaTime;//時間を計測
+            if(CurrentTime > Span)
+            {
+                Physical--; //体力を1減少
+                CurrentTime = 0f; //経過時間をリセット
+                DisPlayStatus(); //画面に表示
+                
+            }
+            
+        }
+
+    }
+    //ステータスの更新処理
+    public void UpdateStatus(int intPrice,string strEffectType,int intEffectNumber)
+    {
         IntCreditMoney += intPrice;　//クレジット使用額に購入商品分を足す
 
         //商品の効果種類によって精神力か体力を更新
@@ -210,17 +232,20 @@ public class GameControllerScript : MonoBehaviour
         {
             StatusText.GetComponent<TextMeshProUGUI>().text = "+" + Diff.ToString();
             StatusText.GetComponent<Animator>().Play(Const.CO.PlusCahngeStatusAnime);
+            this.GetComponent<AudioSource>().PlayOneShot(aucStatusInc);//増加音を再生
         }
         else if (Diff < 0)
         {
             StatusText.GetComponent<TextMeshProUGUI>().text = Diff.ToString();
             StatusText.GetComponent<Animator>().Play(Const.CO.MinusCahngeStatusAnime);
+            this.GetComponent<AudioSource>().PlayOneShot(aucStatusDec);//減少音を再生
         }
     }
 
     //ゲームが終了している場合の処理
     private void GameFinishCheck()
     {
+        blGameFinish = true; //ゲーム終了変数に値を格納
         FinishPanel.GetComponent<Canvas>().enabled = true; // 終了画面を表示
 
         //スコア表示
