@@ -28,6 +28,9 @@ public class ClickButtonScript : MonoBehaviour
             case "Title":
                 SceneManager.LoadScene(Const.CO.TitleScene);
                 break;
+            case "Demo":
+                SceneManager.LoadScene("DemoScene");
+                break;
         }
         
     }

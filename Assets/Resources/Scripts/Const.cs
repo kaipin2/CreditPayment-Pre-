@@ -9,12 +9,16 @@ namespace Const
         private string strName; //商品名
         private int intPrice; //商品の金額
         private string strEffectType; //商品の効果種類
-        private int intEffectSize; //商品の効果量
+        private int intEffectSize; //商品の効果
+        private string strImageName; //商品画像名
+        private Vector2 vec2ImageSize; //商品画像サイズ
 
         //商品のステータスを設定する
-        public Goods SetStatus(string argstrName,int argintPrize, string argstrEffectType, int argintEffectSize)
+        public Goods SetStatus(string argstrName,int argintPrize, string argstrEffectType, int argintEffectSize,string argstrImageName,Vector2 argvec2ImageSize)
         {
             strName = argstrName;
+            strImageName = argstrImageName;
+            vec2ImageSize = argvec2ImageSize;
             intPrice =argintPrize;
             strEffectType=argstrEffectType;
             intEffectSize=argintEffectSize;
@@ -24,6 +28,14 @@ namespace Const
         public string GetName()
         {
             return this.strName;
+        }
+        public string GetImageName()
+        {
+            return this.strImageName;
+        }
+        public Vector2 GetImageSize()
+        {
+            return this.vec2ImageSize;
         }
         public int GetPrice()
         {
@@ -58,6 +70,7 @@ namespace Const
         #region object場所
         public static string GoodsControllObjectPass = "GameCanvas/BackGround/GoodsControllObject"; //全商品の親オブジェクトのGameControllerとの相対位置
         public static string GoodsNameTextPass = "GoodsName"; //商品名を表示しているテキストGoodsControllObjectとの相対位置    
+        public static string GoodsImagePass = "GoodsImage"; //商品画像GoodsControllObjectとの相対位置    
         public static string GoodsPriceTextPass = "GoodsPrice/PriceText"; //商品の値段を表示しているテキストGoodsControllObjectとの相対位置
         public static string GoodsEffectTypeImagePass = "GoodsDetail/Image"; //商品の効果種類を表示している画像GoodsControllObjectとの相対位置
         public static string GoodsEffectSizeTextPass = "GoodsDetail/GoodsDetailText"; //商品の効果量を表示しているテキストGoodsControllObjectとの相対位置
@@ -89,12 +102,13 @@ namespace Const
         public static string MoneyImageName = "JCB_CreditCard"; //プレイヤーの残高を表示するための画像名
         public static string MentalImageName = "Heart"; //プレイヤーの精神力を表示するための画像名
         public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
+        public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス
         #endregion
 
         #region 商品の種類
-        public static Goods Goods_A = new Goods().SetStatus("商品A", 1000, PlayerPhysicalName, 10); //商品A
-        public static Goods Goods_B = new Goods().SetStatus("商品B", 300, PlayerPhysicalName, 2); //商品B
-        public static Goods Goods_C = new Goods().SetStatus("商品C", 400, PlayerMentalName, -4); //商品C
+        public static Goods Goods_A = new Goods().SetStatus("おにぎり", 1000, PlayerPhysicalName, 10, "onigiri", new Vector2(80,66)); //商品A
+        public static Goods Goods_B = new Goods().SetStatus("サンドイッチ", 300, PlayerPhysicalName, 2, "sandwich", new Vector2(80, 66)); //商品B
+        public static Goods Goods_C = new Goods().SetStatus("ゲーム機", 400, PlayerMentalName, -4, "NintendoSwitch", new Vector2(80, 66)); //商品C
         #endregion
 
         #region 商品のリスト

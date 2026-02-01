@@ -109,7 +109,9 @@ public class GameControllerScript : MonoBehaviour
         FinishPanel.GetComponent<Canvas>().enabled = false; // 終了画面を非表示
 
         //商品の配置を行う
+        
         ObjGoodsControll = this.transform.Find(Const.CO.GoodsControllObjectPass).gameObject;
+        
         foreach (Transform child in ObjGoodsControll.transform)
         {
             ObjGoodsControll.GetComponent<GoodsStateDisplayUpdateScript>().StateUpdate_ALL(
@@ -117,6 +119,7 @@ public class GameControllerScript : MonoBehaviour
                 Const.CO.GoodsList[UnityEngine.Random.Range(0, UnityEngine.Random.Range(0, Const.CO.GoodsList.Count))]
             );
         }
+        
         //初期ステータスを画面に表示
         DisPlayStatus();
     }
@@ -252,7 +255,7 @@ public class GameControllerScript : MonoBehaviour
         //経過日数
         FinishPanel.transform.Find(Const.CO.ScoreDayTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "経過日数："+CountDay.ToString()+"日";
         //取得給与
-        FinishPanel.transform.Find(Const.CO.ScoreGetSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得給与：" + IntGetMoney.ToString() + "円";
+        FinishPanel.transform.Find(Const.CO.ScoreGetSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得金額：" + IntGetMoney.ToString() + "円";
         //購入金額
         FinishPanel.transform.Find(Const.CO.ScoreUseSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "購入金額：" + IntUseMoney.ToString() + "円";
         //取得精神力
