@@ -106,9 +106,9 @@ namespace Const
         #endregion
 
         #region 商品の種類
-        public static Goods Goods_A = new Goods().SetStatus("おにぎり", 1000, PlayerPhysicalName, 10, "onigiri", new Vector2(80,66)); //商品A
-        public static Goods Goods_B = new Goods().SetStatus("サンドイッチ", 300, PlayerPhysicalName, 2, "sandwich", new Vector2(80, 66)); //商品B
-        public static Goods Goods_C = new Goods().SetStatus("ゲーム機", 400, PlayerMentalName, -4, "NintendoSwitch", new Vector2(80, 66)); //商品C
+        public static Goods Goods_A = new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 5, "onigiri", new Vector2(80,66)); //商品A
+        public static Goods Goods_B = new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "sandwich", new Vector2(80, 66)); //商品B
+        public static Goods Goods_C = new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 4, "NintendoSwitch", new Vector2(80, 66)); //商品C
         #endregion
 
         #region 商品のリスト

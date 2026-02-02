@@ -1,9 +1,9 @@
 //ゲームで使用する変数やゲーム状況を監視するスクリプト
+using Const;//定数を定義している
 using System;
 using System.Data.SqlTypes;
 using TMPro;
 using UnityEngine;
-using Const;//定数を定義している
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -20,9 +20,17 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private GameObject SettingPanel; //ゲーム設定を表示するobject
     [SerializeField]
+    private AudioClip aucStatusTimer;　//タイマー音
+    [SerializeField]
     private AudioClip aucStatusDec;　//ステータス減少音
     [SerializeField]
     private AudioClip aucStatusInc;　//ステータス増加音
+    [SerializeField]
+    private AudioClip aucMoneyDec;　//お金減少音
+    [SerializeField]
+    private AudioClip aucMoneyInc;　//お金増加音
+    [SerializeField]
+    private AudioClip aucSelectGoods;　//商品の選択音
 
     private int IntSalaryDay; // 給料日
     private int IntCreditDay; //クレジットカードの引き落とし日
@@ -59,6 +67,11 @@ public class GameControllerScript : MonoBehaviour
     private float Span = 1f; // リセット間隔
     private bool blGameFinish = false; //ゲームが終了しているか格納する関数
 
+    //商品選択音を返す関数
+    public AudioClip GetSelectGoodsSE()
+    {
+        return aucSelectGoods;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -136,7 +149,7 @@ public class GameControllerScript : MonoBehaviour
             {
                 Physical--; //体力を1減少
                 CurrentTime = 0f; //経過時間をリセット
-                DisPlayStatus(); //画面に表示
+                DisPlayStatus(aucStatusTimer); //画面に表示
                 
             }
             
@@ -171,7 +184,7 @@ public class GameControllerScript : MonoBehaviour
     }
 
     //画面上ステータスを反映する関数
-    private void DisPlayStatus()
+    private void DisPlayStatus(AudioClip aucSE = null)
     {
         //ステータス残量を画面に表示
         ObjRestMoneyText.GetComponent<TextMeshProUGUI>().text = Const.CO.PlayerMoneyName+"：" + Money;
@@ -184,15 +197,15 @@ public class GameControllerScript : MonoBehaviour
         ObjDayText.GetComponent<TextMeshProUGUI>().text = CurrentDay.Day.ToString() + "日";
 
         //金額変化を表示
-        StatusChange(Money - oldMoney, ObjChangeMoneyText);
+        StatusChange(Money - oldMoney, ObjChangeMoneyText, aucSE);
         oldMoney = Money; //計算前残高を更新
 
         //精神力変化を表示
-        StatusChange(Mental - oldMental, ObjChangeMentalText);
+        StatusChange(Mental - oldMental, ObjChangeMentalText, aucSE);
         oldMental = Mental; //計算前精神力を更新
         
         //体力変化を表示
-        StatusChange(Physical - oldPhysical, ObjChangePhysicalText);
+        StatusChange(Physical - oldPhysical, ObjChangePhysicalText, aucSE);
         oldPhysical = Physical; //計算前体力を更新
 
         //残金、精神力、体力のいずれかが負の場合ゲーム終了
@@ -203,17 +216,26 @@ public class GameControllerScript : MonoBehaviour
     //日付を更新する際に処理する関数
     private void DayCountUp()
     {
+        AudioClip aucSE = null; //再生するSE
+
         //経過日数に+1
         CountDay++;
         //現在の日付を更新
         CurrentDay = StartDay.AddDays(CountDay);
-        
+
+        //一日たつごとに仕事でメンタル減少
+        int intDecMental = UnityEngine.Random.Range(1, 3);
+        IntUseMental = intDecMental;
+        Mental -= intDecMental;
+        DisPlayStatus();
+
         //給料日の場合、給料を加算
         if (CurrentDay.Day == IntSalaryDay)
         {
             Debug.Log($"給料日");
             Money += IntMonthlyIncome;
             IntGetMoney += IntMonthlyIncome; //取得金額に給料を足す
+            aucSE = aucMoneyInc; //お金増加音を設定
         }
         //クレジットカード引き落とし日の場合、残金を更新
         if (CurrentDay.Day == IntCreditDay)
@@ -222,27 +244,32 @@ public class GameControllerScript : MonoBehaviour
             Money -= IntCreditMoney;
             IntUseMoney += IntCreditMoney; //消費金額に現在のクレジット使用量を足す
             IntCreditMoney = 0; //クレジット使用量を初期化
+            aucSE = aucMoneyDec; //お金増加音を設定
         }
 
         //画面上のステータスを更新
-        DisPlayStatus();
+        DisPlayStatus(aucSE);
+
+        
+
     }
 
     //ステータスが変化したときに行う処理
-    private void StatusChange(int Diff,GameObject StatusText)
+    private void StatusChange(int Diff,GameObject StatusText, AudioClip aucSE)
     {
         if (Diff > 0)
         {
             StatusText.GetComponent<TextMeshProUGUI>().text = "+" + Diff.ToString();
             StatusText.GetComponent<Animator>().Play(Const.CO.PlusCahngeStatusAnime);
-            this.GetComponent<AudioSource>().PlayOneShot(aucStatusInc);//増加音を再生
+            if(!aucSE) aucSE = aucStatusInc;//増加音を設定
         }
         else if (Diff < 0)
         {
             StatusText.GetComponent<TextMeshProUGUI>().text = Diff.ToString();
             StatusText.GetComponent<Animator>().Play(Const.CO.MinusCahngeStatusAnime);
-            this.GetComponent<AudioSource>().PlayOneShot(aucStatusDec);//減少音を再生
+            if (!aucSE) aucSE = aucStatusDec;//減少音を設定
         }
+        this.GetComponent<AudioSource>().PlayOneShot(aucSE);//SEを再生
     }
 
     //ゲームが終了している場合の処理

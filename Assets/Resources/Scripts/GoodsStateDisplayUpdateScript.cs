@@ -43,8 +43,7 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     {
         //商品画像を取得
         Sprite spImage = Resources.Load<Sprite>(Const.CO.GoodsImageListPass + stringImageName);
-        Debug.Log($"商品画像：{spImage}");
-        Debug.Log($"対象商品：{TargetGoods.name}");
+        //商品画像を表示するオブジェクトを取得
         GameObject objGoodsImage = TargetGoods.transform.Find(Const.CO.GoodsImagePass).gameObject;
         objGoodsImage.GetComponent<SpriteRenderer>().sprite = spImage; //商品画像更新
         objGoodsImage.transform.localScale = vec2ImageSize; //商品サイズ更新
@@ -54,8 +53,10 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     //金額のステータスを更新する
     public void StateUpdate_Price(Transform TargetGoods,int intPrice)
     {
+        //金額を設定
+        int intRandomPrice = (int)(intPrice * UnityEngine.Random.Range(0.85f,1.25f));
         //金額を画面上に反映
-        TargetGoods.transform.Find(Const.CO.GoodsPriceTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = intPrice.ToString();
+        TargetGoods.transform.Find(Const.CO.GoodsPriceTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = intRandomPrice.ToString();
         
     }
     //効果タイプのステータスを更新する

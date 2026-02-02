@@ -1,29 +1,39 @@
 //Mainゲーム画面で商品をクリックした際に行われるスクリプト
 
-using UnityEngine;
 using TMPro; //名前空間を追加
+using UnityEngine;
+using UnityEngine.Audio;
 
 public class GoodsClickActionScript : MonoBehaviour
 {
     [SerializeField]
-    private GameControllerScript gcsMainGameScripe;
+    private GameControllerScript gcsMainGameScripe;//メインゲームのスクリプトを持っているオブジェクト
 
     private GameObject ParentObj; //親オブジェクト
     private string strPriceText; //値段
     private string strEffectText; //効果数
     private string strEffectType; //効果種類
+    private bool blAudioPlaying; //SEが再生させているか
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //商品達の親Objectを取得
         ParentObj = this.gameObject.transform.parent.gameObject;
-        
+        blAudioPlaying = false;//SEが再生されているかの関数を初期化
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //SEが再生終了している場合
+        if (blAudioPlaying && !gcsMainGameScripe.GetComponent<AudioSource>().isPlaying)
+        {
+            //残金、体力、精神力を更新
+            gcsMainGameScripe.UpdateStatus(int.Parse(strPriceText), strEffectType, int.Parse(strEffectText));
+            blAudioPlaying = false;//SEが再生されているかの関数を初期化
+        }
     }
 
     public void ClickGoods()
@@ -44,15 +54,17 @@ public class GoodsClickActionScript : MonoBehaviour
             else if(strEffectType.Contains(Const.CO.PhysicalImageName)){
                 strEffectType = Const.CO.PlayerPhysicalName;
             }
+            
             //デバッグ用
-            print($"Goods:{name},Price:{strPriceText},Effect:{strEffectType}→{strEffectText}");
+            //print($"Goods:{name},Price:{strPriceText},Effect:{strEffectType}→{strEffectText}");
             
             //アニメーション中を示す変数をTrueにして、商品を移動させるアニメーションを実行
             ParentObj.GetComponent<AnimationEndScript>().blAnimation = true;
             ParentObj.GetComponent<Animator>().Play(Const.CO.OutGoodsAnime);
-
-            //残金、体力、精神力を更新
-            gcsMainGameScripe.UpdateStatus(int.Parse(strPriceText),strEffectType, int.Parse(strEffectText));
+            //商品を選んだ時のSEを再生
+            gcsMainGameScripe.GetComponent<AudioSource>().PlayOneShot(gcsMainGameScripe.GetSelectGoodsSE());//SEを再生
+            blAudioPlaying = true; //SE再生中に設定
+            
 
         }
         
