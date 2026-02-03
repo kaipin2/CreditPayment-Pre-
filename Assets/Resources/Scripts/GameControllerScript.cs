@@ -30,7 +30,11 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private AudioClip aucMoneyInc;　//お金増加音
     [SerializeField]
-    private AudioClip aucSelectGoods;　//商品の選択音
+    private AudioClip aucSelectGoods; //商品の選択音
+    [SerializeField]
+    private AudioSource ausBGMAudioSource;　//BGMのAudioSource
+    [SerializeField]
+    private AudioClip[] aucBGMList;　//BGMリスト
 
     private int IntSalaryDay; // 給料日
     private int IntCreditDay; //クレジットカードの引き落とし日
@@ -67,64 +71,105 @@ public class GameControllerScript : MonoBehaviour
     private float Span = 1f; // リセット間隔
     private bool blGameFinish = false; //ゲームが終了しているか格納する関数
 
+    #region Public関数
     //商品選択音を返す関数
     public AudioClip GetSelectGoodsSE()
     {
         return aucSelectGoods;
     }
+
+    
+    //ステータスの更新処理
+    public void UpdateStatus(int intPrice, string strEffectType, int intEffectNumber)
+    {
+        IntCreditMoney += intPrice;　//クレジット使用額に購入商品分を足す
+
+        //商品の効果種類によって精神力か体力を更新
+        if (strEffectType == Const.CO.PlayerMentalName)
+        {
+            Mental += intEffectNumber; //精神力を更新
+            //精神力が減少する場合は消費変数を、増加する場合は取得変数を更新
+            if (intEffectNumber < 0) IntUseMental += Mathf.Abs(intEffectNumber);
+            else if (intEffectNumber > 0) IntGetMental += Mathf.Abs(intEffectNumber);
+        }
+        else if (strEffectType == Const.CO.PlayerPhysicalName)
+        {
+            Physical += intEffectNumber; //体力力を更新
+            //体力が減少する場合は消費変数を、増加する場合は取得変数を更新
+            if (intEffectNumber < 0) IntUsePhysical += Mathf.Abs(intEffectNumber);
+            else if (intEffectNumber > 0) IntGetPhysical += Mathf.Abs(intEffectNumber);
+        }
+
+        //日付を更新する際の処理
+        DayCountUp();
+
+
+    }
+
+    //現在再生している音声を停止して、新しい音声を再生させる
+    public void StopAndPlayAudio(AudioClip argausPlayAudio)
+    {
+        //現在再生されている音声を停止
+        this.GetComponent<AudioSource>().Stop();
+        //選択した音声を再生
+        this.GetComponent<AudioSource>().PlayOneShot(argausPlayAudio);
+    }
+    #endregion
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         #region TextObject取得
-            ObjChangeMoneyText = MoneyPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
-            ObjRestMoneyText = MoneyPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
-            ObjChangeMentalText = MentalPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
-            ObjRestMentalText = MentalPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
-            ObjChangePhysicalText = PhysicalPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
-            ObjRestPhysicalText = PhysicalPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
-            ObjYearText = DayPanel.transform.Find(Const.CO.YearTextPass).gameObject;
-            ObjMonthText = DayPanel.transform.Find(Const.CO.MonthTextPass).gameObject;
-            ObjDayText = DayPanel.transform.Find(Const.CO.DayTextPass).gameObject;
-            ObjSalaryText= SettingPanel.transform.Find(Const.CO.SalaryTextPass).gameObject;
-            ObjWithdrawalText= SettingPanel.transform.Find(Const.CO.WithdrawalTextPass).gameObject;
+        ObjChangeMoneyText = MoneyPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
+        ObjRestMoneyText = MoneyPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
+        ObjChangeMentalText = MentalPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
+        ObjRestMentalText = MentalPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
+        ObjChangePhysicalText = PhysicalPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
+        ObjRestPhysicalText = PhysicalPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
+        ObjYearText = DayPanel.transform.Find(Const.CO.YearTextPass).gameObject;
+        ObjMonthText = DayPanel.transform.Find(Const.CO.MonthTextPass).gameObject;
+        ObjDayText = DayPanel.transform.Find(Const.CO.DayTextPass).gameObject;
+        ObjSalaryText = SettingPanel.transform.Find(Const.CO.SalaryTextPass).gameObject;
+        ObjWithdrawalText = SettingPanel.transform.Find(Const.CO.WithdrawalTextPass).gameObject;
         #endregion
 
         #region 変数設定
         StartDay = DateTime.Now; // 初期の日付を設定
-            CurrentDay = StartDay; //現在の日付を初期化
-            IntSalaryDay = 25; //給料日を設定
-            IntCreditDay = 15;//クレジットカードの引き落とし日を設定
-            IntMonthlyIncome = 10000; //月収を設定
-            IntCreditMoney = 0; //クレジット使用額を初期化
+        CurrentDay = StartDay; //現在の日付を初期化
+        IntSalaryDay = 25; //給料日を設定
+        IntCreditDay = 15;//クレジットカードの引き落とし日を設定
+        IntMonthlyIncome = 10000; //月収を設定
+        IntCreditMoney = 0; //クレジット使用額を初期化
 
-            Money = IntMonthlyIncome; //初期残金を設定
-            oldMoney = Money; //計算前残高を初期化
-            Mental = 10; //初期精神力を設定
-            oldMental = Mental; //計算前精神力を設定
-            Physical = 20; //初期体力を設定
-            oldPhysical = Physical; // 計算前体力を設定
-            
-            //スコア関係の値を初期化
-            CountDay = 0; //経過日数を初期化
-            IntGetMoney = 0;　//取得金額を初期化
-            IntUseMoney = 0; //消費金額を初期化
-            IntGetMental = 0; //取得精神力を初期化
-            IntUseMental = 0; //消費精神力を初期化
-            IntGetPhysical = 0; //取得体力を初期化
-            IntUsePhysical = 0; //消費体力を初期化
+        Money = IntMonthlyIncome; //初期残金を設定
+        oldMoney = Money; //計算前残高を初期化
+        Mental = 10; //初期精神力を設定
+        oldMental = Mental; //計算前精神力を設定
+        Physical = 20; //初期体力を設定
+        oldPhysical = Physical; // 計算前体力を設定
+
+        //スコア関係の値を初期化
+        CountDay = 0; //経過日数を初期化
+        IntGetMoney = 0; //取得金額を初期化
+        IntUseMoney = 0; //消費金額を初期化
+        IntGetMental = 0; //取得精神力を初期化
+        IntUseMental = 0; //消費精神力を初期化
+        IntGetPhysical = 0; //取得体力を初期化
+        IntUsePhysical = 0; //消費体力を初期化
         #endregion
 
         #region 設定値を画面に表示
         ObjSalaryText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntSalaryDay + "日";
-            ObjWithdrawalText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntCreditDay + "日";
+        ObjWithdrawalText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntCreditDay + "日";
         #endregion
+
+        aucBGMList = Resources.LoadAll<AudioClip>(Const.CO.BMGListPass); //BGMのリストを取得
 
         FinishPanel.GetComponent<Canvas>().enabled = false; // 終了画面を非表示
 
         //商品の配置を行う
-        
+
         ObjGoodsControll = this.transform.Find(Const.CO.GoodsControllObjectPass).gameObject;
-        
+
         foreach (Transform child in ObjGoodsControll.transform)
         {
             ObjGoodsControll.GetComponent<GoodsStateDisplayUpdateScript>().StateUpdate_ALL(
@@ -132,11 +177,14 @@ public class GameControllerScript : MonoBehaviour
                 Const.CO.GoodsList[UnityEngine.Random.Range(0, UnityEngine.Random.Range(0, Const.CO.GoodsList.Count))]
             );
         }
-        
+
         //初期ステータスを画面に表示
         DisPlayStatus();
-    }
 
+        //ausBGMAudioSource.AudioGenerator = "";//aucBGMList
+        //BGM再生
+        ausBGMAudioSource.Play();
+    }
     public void Update()
     {
 
@@ -156,32 +204,7 @@ public class GameControllerScript : MonoBehaviour
         }
 
     }
-    //ステータスの更新処理
-    public void UpdateStatus(int intPrice,string strEffectType,int intEffectNumber)
-    {
-        IntCreditMoney += intPrice;　//クレジット使用額に購入商品分を足す
-
-        //商品の効果種類によって精神力か体力を更新
-        if (strEffectType == Const.CO.PlayerMentalName)
-        {
-            Mental += intEffectNumber; //精神力を更新
-            //精神力が減少する場合は消費変数を、増加する場合は取得変数を更新
-            if (intEffectNumber < 0) IntUseMental += Mathf.Abs(intEffectNumber);
-            else if (intEffectNumber > 0) IntGetMental += Mathf.Abs(intEffectNumber);
-        }
-        else if(strEffectType == Const.CO.PlayerPhysicalName)
-        {
-            Physical += intEffectNumber; //体力力を更新
-            //体力が減少する場合は消費変数を、増加する場合は取得変数を更新
-            if (intEffectNumber < 0) IntUsePhysical += Mathf.Abs(intEffectNumber);
-            else if (intEffectNumber > 0) IntGetPhysical += Mathf.Abs(intEffectNumber);
-        }
-
-        //日付を更新する際の処理
-        DayCountUp();
-        
-        
-    }
+    
 
     //画面上ステータスを反映する関数
     private void DisPlayStatus(AudioClip aucSE = null)
@@ -269,7 +292,9 @@ public class GameControllerScript : MonoBehaviour
             StatusText.GetComponent<Animator>().Play(Const.CO.MinusCahngeStatusAnime);
             if (!aucSE) aucSE = aucStatusDec;//減少音を設定
         }
-        this.GetComponent<AudioSource>().PlayOneShot(aucSE);//SEを再生
+
+        //ステータスに変化があった場合SEを再生
+        if(Diff != 0) this.GetComponent<AudioSource>().PlayOneShot(aucSE);
     }
 
     //ゲームが終了している場合の処理

@@ -102,7 +102,11 @@ namespace Const
         public static string MoneyImageName = "JCB_CreditCard"; //プレイヤーの残高を表示するための画像名
         public static string MentalImageName = "Heart"; //プレイヤーの精神力を表示するための画像名
         public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
-        public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス
+        public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス、Resourcesからの相対パス
+        #endregion
+
+        #region Audio保存場所
+        public static string BMGListPass = "Audio/BGM/"; //BGMを格納しているパス、Resourcesからの相対パス
         #endregion
 
         #region 商品の種類

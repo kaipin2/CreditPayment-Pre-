@@ -61,8 +61,9 @@ public class GoodsClickActionScript : MonoBehaviour
             //アニメーション中を示す変数をTrueにして、商品を移動させるアニメーションを実行
             ParentObj.GetComponent<AnimationEndScript>().blAnimation = true;
             ParentObj.GetComponent<Animator>().Play(Const.CO.OutGoodsAnime);
-            //商品を選んだ時のSEを再生
-            gcsMainGameScripe.GetComponent<AudioSource>().PlayOneShot(gcsMainGameScripe.GetSelectGoodsSE());//SEを再生
+
+            //現在再生している音声を停止して商品を選んだ時のSEを再生
+            gcsMainGameScripe.StopAndPlayAudio(gcsMainGameScripe.GetSelectGoodsSE());
             blAudioPlaying = true; //SE再生中に設定
             
 
