@@ -1,6 +1,8 @@
 # クレジットカード決済ゲーム(仮名)
 
 実行環境 Unity 6000.3.2f1(64-bit)
+以下リンク先で遊べます
+https://unityroom.com/games/creditcardpayment
 
 # 1.ゲーム概要
 画面上に表示される3つの商品を1日1回購入して
