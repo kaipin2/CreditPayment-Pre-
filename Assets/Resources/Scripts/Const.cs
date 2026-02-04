@@ -104,13 +104,17 @@ namespace Const
         public static BGM_SE EmergencyBGM = new BGM_SE().SetStatus("EmergencyBGM", 0.5f); //ステータスが危険な状態の時のBGM
 
         #endregion
-        #region テキストの色
+        #region 色の設定
         //数字がプラスの時のテキストカラー
         public static Color PlusColor = new Color(0, 224, 255, 255);
         //数字がマイナスの時のテキストカラー
         public static Color MinusColor = new Color(255, 0, 0, 255);
         //数字がゼロの時のテキストカラー
         public static Color ZeroColor = new Color(255, 255, 255, 255);
+        //精神力に作用する商品の背景色
+        public static Color MentalBackColor = new Color(1f, 0.56f, 0.56f, 1f);
+        //体力に作用する商品の背景色
+        public static Color PhysicalBackColor = new Color(0.54f, 0.54f, 0.54f, 1f);
         #endregion
 
         #region object場所

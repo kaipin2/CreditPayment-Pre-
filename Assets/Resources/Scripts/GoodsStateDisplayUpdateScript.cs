@@ -1,8 +1,11 @@
 //表示されている商品の状態を更新するスクリプト
 
 using Const;  //定数を定義している
+using System.ComponentModel;
 using TMPro; //名前空間を追加
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GoodsStateDisplayUpdateScript : MonoBehaviour
 {
@@ -62,15 +65,20 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     //効果タイプのステータスを更新する
     public void StateUpdate_EffectType(Transform TargetGoods,string strEffectType)
     {
+        
         SpriteRenderer sprEffectType = TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.GetComponent<SpriteRenderer>();
         //体力か精神力かで表示する画像を変更
         if(strEffectType == Const.CO.PlayerMentalName)
         {
+            //精神力を設定
             sprEffectType.sprite = sprMental;
+            GoodsBackColor(TargetGoods,Const.CO.MentalBackColor);
         }
         else if(strEffectType == Const.CO.PlayerPhysicalName)
         {
+            //体力を設定
             sprEffectType.sprite = sprPhysical;
+            GoodsBackColor(TargetGoods,Const.CO.PhysicalBackColor);
         }
     }
     //効果量のステータスを更新する
@@ -102,5 +110,11 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
         {
             guiEffextSizeText.color = Const.CO.ZeroColor;
         }
+    }
+
+    public void GoodsBackColor(Transform TargetGoods,Color BackColor)
+    {
+        TargetGoods.gameObject.GetComponent<Image>().color = BackColor;
+        
     }
 }

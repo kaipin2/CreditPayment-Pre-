@@ -30,7 +30,6 @@ public class AnimationEndScript : MonoBehaviour
 
         foreach (Transform child in this.gameObject.transform)
         {
-
             //商品のステータスを更新
             this.gameObject.GetComponent<GoodsStateDisplayUpdateScript>().StateUpdate_ALL(
                 child,
