@@ -50,6 +50,46 @@ namespace Const
             return this.intEffectSize;
         }
     }
+
+    //スコアのクラスを生成
+    public class Score
+    {
+        private string ScoreTextPass;//スコアを表示するObjectPass
+        private string ScoreText;//表示するスコアのテキスト※変数は<変数>で設定
+
+        //Scoreのステータスを設定
+        public Score SetStatus(string argScoreTextPass, string argScoreText)
+        {
+            ScoreTextPass = argScoreTextPass;
+            ScoreText = argScoreText;
+            return this;
+        }
+
+        //Scoreのステータスを取得する
+        public string GetScoreTextPass() {return this.ScoreTextPass;}
+        public string GetScoreText(string varScore = "") {
+            return this.ScoreText.Replace("<変数>", varScore);
+        }
+    }
+    //BGMやSEの名前と音量を設定するクラスを生成
+    public class BGM_SE
+    {
+        private string AudioName;
+        private float AudioVolume;
+
+        //BGMやSEのステータスを設定
+        public BGM_SE SetStatus(string argAudioName, float argAudioVolume)
+        {
+            AudioName = argAudioName;
+            AudioVolume = argAudioVolume;
+            return this;
+        }
+
+        //BGMやSEのステータスを取得する
+        public string GetAudioName() {return AudioName;}
+        public float GetAudioVolume() { return AudioVolume; }
+    }
+
     public static class CO
     {
         public static string GameVersion = "Ver 1.0.0"; //ゲームのバージョン情報
@@ -57,6 +97,12 @@ namespace Const
         #region シーン名
         public static string TitleScene = "TitleScene"; //タイトルシーンの名称
         public static string MainGameScene = "MainGameScene"; //メインゲーム画面のシーン名称
+        #endregion
+
+        #region BGM名
+        public static BGM_SE MainBGM = new BGM_SE().SetStatus("MainBGM",1); //メインのBGM
+        public static BGM_SE EmergencyBGM = new BGM_SE().SetStatus("EmergencyBGM", 0.5f); //ステータスが危険な状態の時のBGM
+
         #endregion
         #region テキストの色
         //数字がプラスの時のテキストカラー
@@ -108,23 +154,39 @@ namespace Const
         #region Audio保存場所
         public static string BMGListPass = "Audio/BGM/"; //BGMを格納しているパス、Resourcesからの相対パス
         #endregion
-
-        #region 商品の種類
-        public static Goods Goods_A = new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 5, "onigiri", new Vector2(80,66)); //商品A
-        public static Goods Goods_B = new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "sandwich", new Vector2(80, 66)); //商品B
-        public static Goods Goods_C = new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 4, "NintendoSwitch", new Vector2(80, 66)); //商品C
+        #region ランダム効果商品
+        public static string RandomEffectSizeText = "?"; //増加ステータスが決まっていない商品の表示
         #endregion
 
-        #region 商品のリスト
+        #region 商品のリスト(ランダム効果は0で表示)
         public static List<Goods> GoodsList = new List<Goods>() {
-            Goods_A,
-            Goods_B,
-            Goods_C,
+            new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "Onigiri", new Vector2(80,66)),
+            new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "Sandwich", new Vector2(80, 66)),
+            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 8, "NintendoSwitch", new Vector2(80, 66)),
+            new Goods().SetStatus("本", 100, PlayerMentalName, 1, "Book", new Vector2(40, 33)),
+            new Goods().SetStatus("ステーキ", 1000, PlayerPhysicalName, 8, "Steak", new Vector2(100, 83)),
+            new Goods().SetStatus("音楽", 250, PlayerMentalName, 2, "Music", new Vector2(100, 100)),
+            new Goods().SetStatus("寝具", 500, PlayerMentalName, 3, "Bedding", new Vector2(100, 100)),
+            new Goods().SetStatus("水晶", 0, PlayerMentalName, 0, "Crystal", new Vector2(60, 50)),
+            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 0, "All-you-can-eat", new Vector2(110, 91)),
             };//商品を格納しているリスト
         #endregion
 
+        #region スコアのリスト
+        public static List<Score> ScoreList = new List<Score> {
+            new Score().SetStatus(ScoreDayTextPass,"経過日数：<変数>日"),
+            new Score().SetStatus(ScoreGetSalaryTextPass,"取得金額：<変数>円"),
+            new Score().SetStatus(ScoreUseSalaryTextPass,"購入金額：<変数>円"),
+            new Score().SetStatus(ScoreGetMentalTextPass,"取得精神力：<変数>"),
+            new Score().SetStatus(ScoreUseMentalTextPass,"消費精神力：<変数>"),
+            new Score().SetStatus(ScoreGetPhysicalTextPass,"取得体力：<変数>"),
+            new Score().SetStatus(ScoreUsePhysicalTextPass, "消費体力：<変数>"),
+            new Score().SetStatus(ScoreNumberTextPass, "<変数>点"),
+            new Score().SetStatus(ScoreRankTextPass, "<変数>")
+            };//商品を格納しているリスト
+        #endregion
         #region ランク表示
-            public static string[,] RankList = new string[8, 2] {
+        public static string[,] RankList = new string[8, 2] {
                 {"SS","100000" },
                 {"S","800000" },
                 {"A","500000" },

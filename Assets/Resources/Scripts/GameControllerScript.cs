@@ -1,7 +1,11 @@
 //ゲームで使用する変数やゲーム状況を監視するスクリプト
 using Const;//定数を定義している
+using NUnit.Framework.Internal;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -32,6 +36,8 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private AudioClip aucSelectGoods; //商品の選択音
     [SerializeField]
+    private AudioClip aucScoreDisplay; //スコアの表示音
+    [SerializeField]
     private AudioSource ausBGMAudioSource;　//BGMのAudioSource
     [SerializeField]
     private AudioClip[] aucBGMList;　//BGMリスト
@@ -40,10 +46,13 @@ public class GameControllerScript : MonoBehaviour
     private int IntCreditDay; //クレジットカードの引き落とし日
     private int IntCreditMoney; //クレジットカード使用額
     private int IntMonthlyIncome; // 月収
+    private int startMoney;  //初期残金
     private int oldMoney;  //計算前の残金
     private int Money;  //残金
+    private int startMental;  //初期精神力
     private int oldMental;  //計算前の精神力
     private int Mental; //精神力
+    private int startPhysical;  //初期体力
     private int oldPhysical;  //計算前の体力
     private int Physical; //体力
     private int CountDay; //経過日数
@@ -53,6 +62,7 @@ public class GameControllerScript : MonoBehaviour
     private int IntUseMental; //消費精神力
     private int IntGetPhysical; //取得体力
     private int IntUsePhysical; //消費体力
+    private int LevelChangeTime;//消費量を変化させるタイミング
     private DateTime StartDay;　//初期の日付
     private DateTime CurrentDay;　//現在の日付
     private GameObject ObjGoodsControll; //全商品の親object
@@ -80,24 +90,29 @@ public class GameControllerScript : MonoBehaviour
 
     
     //ステータスの更新処理
-    public void UpdateStatus(int intPrice, string strEffectType, int intEffectNumber)
+    public void UpdateStatus(int intPrice, string strEffectType, string strEffectNumber)
     {
+        int EffectSize = 0; 
         IntCreditMoney += intPrice;　//クレジット使用額に購入商品分を足す
+
+        //効果量が0の場合、ランダム設定
+        if (strEffectNumber == Const.CO.RandomEffectSizeText) EffectSize = UnityEngine.Random.Range(-10, 10);
+        else EffectSize = int.Parse(strEffectNumber);//効果量を格納
 
         //商品の効果種類によって精神力か体力を更新
         if (strEffectType == Const.CO.PlayerMentalName)
         {
-            Mental += intEffectNumber; //精神力を更新
+            Mental += EffectSize; //精神力を更新
             //精神力が減少する場合は消費変数を、増加する場合は取得変数を更新
-            if (intEffectNumber < 0) IntUseMental += Mathf.Abs(intEffectNumber);
-            else if (intEffectNumber > 0) IntGetMental += Mathf.Abs(intEffectNumber);
+            if (EffectSize < 0) IntUseMental += Mathf.Abs(EffectSize);
+            else if (EffectSize > 0) IntGetMental += Mathf.Abs(EffectSize);
         }
         else if (strEffectType == Const.CO.PlayerPhysicalName)
         {
-            Physical += intEffectNumber; //体力力を更新
+            Physical += EffectSize; //体力力を更新
             //体力が減少する場合は消費変数を、増加する場合は取得変数を更新
-            if (intEffectNumber < 0) IntUsePhysical += Mathf.Abs(intEffectNumber);
-            else if (intEffectNumber > 0) IntGetPhysical += Mathf.Abs(intEffectNumber);
+            if (EffectSize < 0) IntUsePhysical += Mathf.Abs(EffectSize);
+            else if (EffectSize > 0) IntGetPhysical += Mathf.Abs(EffectSize);
         }
 
         //日付を更新する際の処理
@@ -142,10 +157,17 @@ public class GameControllerScript : MonoBehaviour
 
         Money = IntMonthlyIncome; //初期残金を設定
         oldMoney = Money; //計算前残高を初期化
+        startMoney = Money; //初期金額を格納
+
         Mental = 10; //初期精神力を設定
         oldMental = Mental; //計算前精神力を設定
+        startMental = Mental; //初期精神力を格納
+
         Physical = 20; //初期体力を設定
         oldPhysical = Physical; // 計算前体力を設定
+        startPhysical = Physical; // 初期体力を格納
+
+        LevelChangeTime = 10; //消費量アップタイミングを初期化
 
         //スコア関係の値を初期化
         CountDay = 0; //経過日数を初期化
@@ -181,21 +203,21 @@ public class GameControllerScript : MonoBehaviour
         //初期ステータスを画面に表示
         DisPlayStatus();
 
-        //ausBGMAudioSource.AudioGenerator = "";//aucBGMList
-        //BGM再生
-        ausBGMAudioSource.Play();
+        //MainのBGMを設定してBGMを再生
+        ChengeBGMClip(Const.CO.MainBGM);
+        
     }
     public void Update()
     {
 
 
-        //アニメーション中でない場合、体力を１/s減少
+        //アニメーション中でない場合、体力を1秒ごとに「経過日数に応じた値 + 1」減少
         if (!ObjGoodsControll.GetComponent<AnimationEndScript>().blAnimation && !blGameFinish)
         {
             CurrentTime += Time.deltaTime;//時間を計測
             if(CurrentTime > Span)
             {
-                Physical--; //体力を1減少
+                Physical-= (int)(CountDay / LevelChangeTime) + 1; //体力を経過日数に応じた値+1減少
                 CurrentTime = 0f; //経過時間をリセット
                 DisPlayStatus(aucStatusTimer); //画面に表示
                 
@@ -205,7 +227,33 @@ public class GameControllerScript : MonoBehaviour
 
     }
     
+    //BGMリストから特定のBGMを再生する関数
+    private void ChengeBGMClip(BGM_SE Audio)
+    {
+        //引数が設定されない場合、BGMを停止
+        if (Audio == null) ausBGMAudioSource.Stop();
+        else
+        {
+            string filename = Audio.GetAudioName(); //ファイル名を取得
+            float Volume = Audio.GetAudioVolume(); //音量を取得
 
+            ausBGMAudioSource.volume = Volume; //音量を設定
+
+            //現在設定されているBGMが再生しようとしているBGMでない場合
+            if (ausBGMAudioSource.clip == null || ausBGMAudioSource.clip.name != filename)
+            {
+                //Clipを修正してBGM再生
+                ausBGMAudioSource.clip = aucBGMList.FirstOrDefault(clip => clip.name == filename);
+                ausBGMAudioSource.Play();
+            }
+            //BGMは変わらないがすでに再生されていない場合、再度再生
+            else if (!ausBGMAudioSource.isPlaying)
+            {
+                ausBGMAudioSource.Play();
+            }
+        }
+        
+    }
     //画面上ステータスを反映する関数
     private void DisPlayStatus(AudioClip aucSE = null)
     {
@@ -232,8 +280,22 @@ public class GameControllerScript : MonoBehaviour
         oldPhysical = Physical; //計算前体力を更新
 
         //残金、精神力、体力のいずれかが負の場合ゲーム終了
-        if(Money < 0 || Mental < 0 || Physical < 0) GameFinishCheck();
-
+        if (Money < 0 || Mental < 0 || Physical < 0)
+        {
+            ChengeBGMClip(null); //BGMを停止する
+            GameFinishCheck(); //ゲーム終了処理を実施
+        }
+        //精神力か体力が一割以下になった場合、BGMを危機的状況BGMに変更
+        else if (startMental / 10 >= Mental || startPhysical / 10 >= Physical)
+        {
+            //危機的状況のBGMを設定してBGMを再生
+            ChengeBGMClip(Const.CO.EmergencyBGM);
+        }
+        else
+        {
+            //MainのBGMを設定してBGMを再生
+            ChengeBGMClip(Const.CO.MainBGM);
+        }
     }
 
     //日付を更新する際に処理する関数
@@ -247,7 +309,7 @@ public class GameControllerScript : MonoBehaviour
         CurrentDay = StartDay.AddDays(CountDay);
 
         //一日たつごとに仕事でメンタル減少
-        int intDecMental = UnityEngine.Random.Range(1, 3);
+        int intDecMental = UnityEngine.Random.Range(1, 3) + (int)(CountDay / LevelChangeTime);
         IntUseMental = intDecMental;
         Mental -= intDecMental;
         DisPlayStatus();
@@ -303,28 +365,48 @@ public class GameControllerScript : MonoBehaviour
         blGameFinish = true; //ゲーム終了変数に値を格納
         FinishPanel.GetComponent<Canvas>().enabled = true; // 終了画面を表示
 
-        //スコア表示
-        //経過日数
-        FinishPanel.transform.Find(Const.CO.ScoreDayTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "経過日数："+CountDay.ToString()+"日";
-        //取得給与
-        FinishPanel.transform.Find(Const.CO.ScoreGetSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得金額：" + IntGetMoney.ToString() + "円";
-        //購入金額
-        FinishPanel.transform.Find(Const.CO.ScoreUseSalaryTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "購入金額：" + IntUseMoney.ToString() + "円";
-        //取得精神力
-        FinishPanel.transform.Find(Const.CO.ScoreGetMentalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得精神力：" + IntGetMental.ToString();
-        //消費精神力
-        FinishPanel.transform.Find(Const.CO.ScoreUseMentalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "消費精神力：" + IntUseMental.ToString();
-        //取得体力
-        FinishPanel.transform.Find(Const.CO.ScoreGetPhysicalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "取得体力：" + IntGetPhysical.ToString();
-        //消費体力
-        FinishPanel.transform.Find(Const.CO.ScoreUsePhysicalTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = "消費体力：" + IntUsePhysical.ToString();
         //スコア点数
         int intScore = ScoreNumberCal();
-        FinishPanel.transform.Find(Const.CO.ScoreNumberTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = intScore.ToString() + "点";
-        //スコアランク
-        FinishPanel.transform.Find(Const.CO.ScoreRankTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = ScoreRankCal(intScore);
+
+        //表示するスコアの変数部分
+        List<string> ScoreList = new List<string>
+        {
+            CountDay.ToString(),
+            IntGetMoney.ToString(),
+            IntUseMoney.ToString(),
+            IntGetMental.ToString(),
+            IntUseMental.ToString(),
+            IntGetPhysical.ToString(),
+            IntUsePhysical.ToString(),
+            intScore.ToString(),
+            ScoreRankCal(intScore)
+        };
+
+        //スコア表示
+        int loopindex = 0; //ループ回数を設定
+        foreach (Score score in Const.CO.ScoreList)
+        {
+            //テキストを画面に表示
+            ScoreDisplay(
+            FinishPanel.transform.Find(score.GetScoreTextPass()).gameObject.GetComponent<TextMeshProUGUI>(),
+            score.GetScoreText(ScoreList[loopindex])
+            );
+
+            loopindex++;//インクリメント
+        }
+
     }
 
+    //スコア表示する関数
+    private void ScoreDisplay(TextMeshProUGUI TextObject , string Score)
+    {
+        TextObject.enabled = true; //画面に表示する
+        TextObject.text = Score; //テキストを設定
+        //表示音を再生
+        this.GetComponent<AudioSource>().volume = 0.3f;
+        this.GetComponent<AudioSource>().PlayOneShot(aucScoreDisplay);
+        
+    }
     //スコア計算する関数
     private int ScoreNumberCal()
     {
@@ -347,7 +429,6 @@ public class GameControllerScript : MonoBehaviour
     private string ScoreRankCal(int intScore)
     {
         string strScoreRank = "";
-        Debug.Log(Const.CO.RankList[0, 1]);
         for (int Rank = 0;Rank <  Const.CO.RankList.GetLength(0);Rank++){
             
             if(intScore >= int.Parse(Const.CO.RankList[Rank, 1]))

@@ -31,7 +31,7 @@ public class GoodsClickActionScript : MonoBehaviour
         if (blAudioPlaying && !gcsMainGameScripe.GetComponent<AudioSource>().isPlaying)
         {
             //残金、体力、精神力を更新
-            gcsMainGameScripe.UpdateStatus(int.Parse(strPriceText), strEffectType, int.Parse(strEffectText));
+            gcsMainGameScripe.UpdateStatus(int.Parse(strPriceText), strEffectType, strEffectText);
             blAudioPlaying = false;//SEが再生されているかの関数を初期化
         }
     }

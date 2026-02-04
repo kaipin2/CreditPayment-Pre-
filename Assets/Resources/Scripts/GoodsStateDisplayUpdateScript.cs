@@ -80,9 +80,11 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
         string strEffectSize = intEffectSize.ToString();
         //効果量を画面上に示すテキストを取得
         TextMeshProUGUI guiEffextSizeText = TargetGoods.transform.Find(Const.CO.GoodsEffectSizeTextPass).gameObject.GetComponent<TextMeshProUGUI>();
-        
+
+        //効果量が０の場合?に変更
+        if (strEffectSize == "0") strEffectSize = Const.CO.RandomEffectSizeText;
         //効果量が正の数値である場合、先頭に+を追加
-        if (!strEffectSize.StartsWith("-") && strEffectSize != "0") strEffectSize = "+" + strEffectSize;
+        else if (!strEffectSize.StartsWith("-")) strEffectSize = "+" + strEffectSize;
 
         //効果量を示すテキスト値を更新
         guiEffextSizeText.text = strEffectSize;

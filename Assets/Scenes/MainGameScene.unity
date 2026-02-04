@@ -2412,8 +2412,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 50, y: 50, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 100, y: 100, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1740746383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2471,7 +2471,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.79, y: 4.39}
+  m_Size: {x: 4.52, y: 2.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -5468,6 +5468,7 @@ MonoBehaviour:
   aucMoneyDec: {fileID: 8300000, guid: ad05e477e78529c4793a9fab125590e3, type: 3}
   aucMoneyInc: {fileID: 8300000, guid: 5d305ad6589cb544fab1cb5836f06c6e, type: 3}
   aucSelectGoods: {fileID: 8300000, guid: cd72f68114501e743bb195d2e16de60b, type: 3}
+  aucScoreDisplay: {fileID: 8300000, guid: d5ed21667e6c8514bb59e1f889e0782b, type: 3}
   ausBGMAudioSource: {fileID: 1499994923}
   aucBGMList: []
 --- !u!4 &1499994921
@@ -5594,7 +5595,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 7163a8e53b49e5e449f8568b2d320459, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
