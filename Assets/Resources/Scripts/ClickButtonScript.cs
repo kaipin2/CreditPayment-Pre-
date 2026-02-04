@@ -16,7 +16,12 @@ public class ClickButtonScript : MonoBehaviour
         
     }
 
-    
+    //タイトルからMain画面に遷移する処理
+    public void MainJumpFromTitle()
+    {
+        this.GetComponent<Animator>().Play(Const.CO.TitleCreditAnime);
+        //JumpScene("Main");
+    }
     //シーンジャンプする関数
     public void JumpScene(string Scene)
     {

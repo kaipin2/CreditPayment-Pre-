@@ -203,6 +203,7 @@ namespace Const
         #endregion
 
         #region アニメーション名
+            public static string TitleCreditAnime = "TitleCredit"; //タイトル画面からMain画面に移動するアニメーション名
             public static string OutGoodsAnime = "OutGoods"; //商品が画面外に移動するアニメーション名
             public static string InGoodsAnime = "InGoods"; //商品が画面内に移動するアニメーション名
             public static string PlusCahngeStatusAnime = "PlusCahngeStatus"; //プレイヤーのステータスが増加したときに表示するアニメーション名
