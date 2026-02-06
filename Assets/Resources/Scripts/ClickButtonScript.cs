@@ -44,6 +44,7 @@ public class ClickButtonScript : MonoBehaviour
     //シーンジャンプする関数
     public void JumpScene(string Scene)
     {
+        Debug.Log("Click");
         switch (Scene)
         {
             case "Main":
@@ -54,6 +55,9 @@ public class ClickButtonScript : MonoBehaviour
                 break;
             case "Demo":
                 SceneManager.LoadScene("DemoScene");
+                break;
+            case "HowToPlay":
+                SceneManager.LoadScene(Const.CO.HowToPlayScene);
                 break;
         }
         

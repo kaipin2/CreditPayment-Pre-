@@ -97,6 +97,7 @@ namespace Const
         #region シーン名
         public static string TitleScene = "TitleScene"; //タイトルシーンの名称
         public static string MainGameScene = "MainGameScene"; //メインゲーム画面のシーン名称
+        public static string HowToPlayScene = "HowToPlayScene"; //メインゲーム画面のシーン名称
         #endregion
 
         #region BGM名
@@ -111,10 +112,12 @@ namespace Const
         public static Color MinusColor = new Color(255, 0, 0, 255);
         //数字がゼロの時のテキストカラー
         public static Color ZeroColor = new Color(255, 255, 255, 255);
-        //精神力に作用する商品の背景色
-        public static Color MentalBackColor = new Color(1f, 0.56f, 0.56f, 1f);
-        //体力に作用する商品の背景色
-        public static Color PhysicalBackColor = new Color(0.54f, 0.54f, 0.54f, 1f);
+        //精神力に作用する背景色
+        public static Color MentalBackColor = new Color(1f, 0.56f, 0.56f, 1f); //(255,143,143,255)
+        //体力に作用する背景色
+        public static Color PhysicalBackColor = new Color(0.54f, 0.54f, 0.54f, 1f);//(138,138,138,255)
+        //残高に作用する背景色
+        public static Color MoneyBackColor = new Color(1f, 0.97f, 0.58f, 1f);//(255,247,148,255)
         #endregion
 
         #region object場所
@@ -149,9 +152,10 @@ namespace Const
         #endregion
 
         #region イメージ画像名
-        public static string MoneyImageName = "JCB_CreditCard"; //プレイヤーの残高を表示するための画像名
+        public static string CreditImageName = "JCB_CreditCard"; //プレイヤーの残高を表示するための画像名
         public static string MentalImageName = "Heart"; //プレイヤーの精神力を表示するための画像名
         public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
+        public static string MoneyImageName = "Money"; //商品のステータス(金額)を表示するための画像名
         public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス、Resourcesからの相対パス
         #endregion
 
@@ -166,13 +170,14 @@ namespace Const
         public static List<Goods> GoodsList = new List<Goods>() {
             new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "Onigiri", new Vector2(80,66)),
             new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "Sandwich", new Vector2(80, 66)),
-            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 8, "NintendoSwitch", new Vector2(80, 66)),
+            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 10, "NintendoSwitch", new Vector2(80, 66)),
             new Goods().SetStatus("本", 100, PlayerMentalName, 1, "Book", new Vector2(40, 33)),
             new Goods().SetStatus("ステーキ", 1000, PlayerPhysicalName, 8, "Steak", new Vector2(100, 83)),
             new Goods().SetStatus("音楽", 250, PlayerMentalName, 2, "Music", new Vector2(100, 100)),
             new Goods().SetStatus("寝具", 500, PlayerMentalName, 3, "Bedding", new Vector2(100, 100)),
-            new Goods().SetStatus("水晶", 0, PlayerMentalName, 0, "Crystal", new Vector2(60, 50)),
-            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 0, "All-you-can-eat", new Vector2(110, 91)),
+            new Goods().SetStatus("占い", 0, PlayerMentalName, 0, "Crystal", new Vector2(60, 50)),
+            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 10, "All-you-can-eat", new Vector2(110, 91)),
+            new Goods().SetStatus("宝くじ", 0, PlayerMoneyName, 0, "Lottery", new Vector2(60, 60)),
             };//商品を格納しているリスト
         #endregion
 

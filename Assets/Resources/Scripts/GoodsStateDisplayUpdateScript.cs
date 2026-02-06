@@ -13,6 +13,8 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     private Sprite sprMental; //精神力を表示する画像
     [SerializeField]
     private Sprite sprPhysical; //体力を表示する画像
+    [SerializeField]
+    private Sprite sprMoney; //お金を表示する画像
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -67,8 +69,11 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     {
         
         SpriteRenderer sprEffectType = TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.GetComponent<SpriteRenderer>();
+        //大きさを調整
+        TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.transform.localScale = new Vector2(1f, 1f);
+
         //体力か精神力かで表示する画像を変更
-        if(strEffectType == Const.CO.PlayerMentalName)
+        if (strEffectType == Const.CO.PlayerMentalName)
         {
             //精神力を設定
             sprEffectType.sprite = sprMental;
@@ -79,6 +84,13 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
             //体力を設定
             sprEffectType.sprite = sprPhysical;
             GoodsBackColor(TargetGoods,Const.CO.PhysicalBackColor);
+        }else if (strEffectType == Const.CO.PlayerMoneyName)
+        {
+            //体力を設定
+            sprEffectType.sprite = sprMoney;
+            GoodsBackColor(TargetGoods, Const.CO.MoneyBackColor);
+            //大きさを調整
+            TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.transform.localScale = new Vector2(0.4f, 0.4f);
         }
     }
     //効果量のステータスを更新する

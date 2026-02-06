@@ -46,20 +46,22 @@ public class GoodsClickActionScript : MonoBehaviour
             strEffectType = this.gameObject.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.GetComponent<SpriteRenderer>().sprite.name;
             strEffectText = this.gameObject.transform.Find(Const.CO.GoodsEffectSizeTextPass).gameObject.GetComponent<TextMeshProUGUI>().text;
             
-            //Heartの文字列が入っている場合は精神力、Dumbbellの文字列が入っている場合は体力を増減
+            //Heartの文字列が入っている場合は精神力、Dumbbellの文字列が入っている場合は体力、Moneyの文字列が入っている場合は残金を増減
             if (strEffectType.Contains(Const.CO.MentalImageName))
             {
                 strEffectType = Const.CO.PlayerMentalName;
             }
             else if(strEffectType.Contains(Const.CO.PhysicalImageName)){
                 strEffectType = Const.CO.PlayerPhysicalName;
+            }else if (strEffectType.Contains(Const.CO.MoneyImageName)){
+                strEffectType = Const.CO.PlayerMoneyName;
             }
-            
-            //デバッグ用
-            //print($"Goods:{name},Price:{strPriceText},Effect:{strEffectType}→{strEffectText}");
-            
-            //アニメーション中を示す変数をTrueにして、商品を移動させるアニメーションを実行
-            ParentObj.GetComponent<AnimationEndScript>().blAnimation = true;
+
+                //デバッグ用
+                //print($"Goods:{name},Price:{strPriceText},Effect:{strEffectType}→{strEffectText}");
+
+                //アニメーション中を示す変数をTrueにして、商品を移動させるアニメーションを実行
+                ParentObj.GetComponent<AnimationEndScript>().blAnimation = true;
             ParentObj.GetComponent<Animator>().Play(Const.CO.OutGoodsAnime);
 
             //現在再生している音声を停止して商品を選んだ時のSEを再生

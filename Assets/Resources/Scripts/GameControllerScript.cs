@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameControllerScript : MonoBehaviour
 {
     [SerializeField]
@@ -39,9 +39,8 @@ public class GameControllerScript : MonoBehaviour
     private AudioClip aucScoreDisplay; //スコアの表示音
     [SerializeField]
     private AudioSource ausBGMAudioSource;　//BGMのAudioSource
-    [SerializeField]
-    private AudioClip[] aucBGMList;　//BGMリスト
 
+    private AudioClip[] aucBGMList;　//BGMリスト
     private int IntSalaryDay; // 給料日
     private int IntCreditDay; //クレジットカードの引き落とし日
     private int IntCreditMoney; //クレジットカード使用額
@@ -72,7 +71,6 @@ public class GameControllerScript : MonoBehaviour
     private GameObject ObjRestMentalText; //精神力の残りを表示するテキスト
     private GameObject ObjChangePhysicalText; //体力の増減を表示するテキスト
     private GameObject ObjRestPhysicalText; //体力の残りを表示するテキスト
-    private GameObject ObjYearText; //現在の年を表示するテキスト
     private GameObject ObjMonthText; //現在の月を表示するテキスト
     private GameObject ObjDayText; //現在の日を表示するテキスト
     private GameObject ObjSalaryText; //給料日を表示するテキスト
@@ -96,7 +94,17 @@ public class GameControllerScript : MonoBehaviour
         IntCreditMoney += intPrice;　//クレジット使用額に購入商品分を足す
 
         //効果量が0の場合、ランダム設定
-        if (strEffectNumber == Const.CO.RandomEffectSizeText) EffectSize = UnityEngine.Random.Range(-10, 10);
+        if (strEffectNumber == Const.CO.RandomEffectSizeText) {
+            //増減させるのが残金の場合
+            if (strEffectType == Const.CO.PlayerMoneyName) {
+                EffectSize = UnityEngine.Random.Range(-10000, 10000) * ((int)(CountDay / LevelChangeTime) + 1);
+            }
+            //増減させるのが残金以外の場合
+            else
+            {
+                EffectSize = UnityEngine.Random.Range(-10, 10) *  ((int)(CountDay / LevelChangeTime) + 1);
+            }
+        }
         else EffectSize = int.Parse(strEffectNumber);//効果量を格納
 
         //商品の効果種類によって精神力か体力を更新
@@ -109,14 +117,20 @@ public class GameControllerScript : MonoBehaviour
         }
         else if (strEffectType == Const.CO.PlayerPhysicalName)
         {
-            Physical += EffectSize; //体力力を更新
+            Physical += EffectSize; //体力を更新
             //体力が減少する場合は消費変数を、増加する場合は取得変数を更新
             if (EffectSize < 0) IntUsePhysical += Mathf.Abs(EffectSize);
             else if (EffectSize > 0) IntGetPhysical += Mathf.Abs(EffectSize);
+        }else if (strEffectType == Const.CO.PlayerMoneyName)
+        {
+            Money += EffectSize; //残金を更新
+            //残金が減少する場合は消費変数を、増加する場合は取得変数を更新
+            if (EffectSize < 0) IntUseMoney += Mathf.Abs(EffectSize);
+            else if (EffectSize > 0) IntGetMoney += Mathf.Abs(EffectSize);
         }
 
-        //日付を更新する際の処理
-        DayCountUp();
+            //日付を更新する際の処理
+            DayCountUp();
 
 
     }
@@ -140,7 +154,6 @@ public class GameControllerScript : MonoBehaviour
         ObjRestMentalText = MentalPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
         ObjChangePhysicalText = PhysicalPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
         ObjRestPhysicalText = PhysicalPanel.transform.Find(Const.CO.PlayerStatusRestTextPass).gameObject;
-        ObjYearText = DayPanel.transform.Find(Const.CO.YearTextPass).gameObject;
         ObjMonthText = DayPanel.transform.Find(Const.CO.MonthTextPass).gameObject;
         ObjDayText = DayPanel.transform.Find(Const.CO.DayTextPass).gameObject;
         ObjSalaryText = SettingPanel.transform.Find(Const.CO.SalaryTextPass).gameObject;
@@ -184,6 +197,12 @@ public class GameControllerScript : MonoBehaviour
         ObjWithdrawalText.GetComponent<TextMeshProUGUI>().text = "毎月" + IntCreditDay + "日";
         #endregion
 
+        #region ステータスの背景色を設定
+        MoneyPanel.GetComponent<Image>().color = Const.CO.MoneyBackColor;
+        MentalPanel.GetComponent<Image>().color = Const.CO.MentalBackColor;
+        PhysicalPanel.GetComponent<Image>().color = Const.CO.PhysicalBackColor;
+        #endregion
+
         aucBGMList = Resources.LoadAll<AudioClip>(Const.CO.BMGListPass); //BGMのリストを取得
 
         FinishPanel.GetComponent<Canvas>().enabled = false; // 終了画面を非表示
@@ -191,7 +210,7 @@ public class GameControllerScript : MonoBehaviour
         //商品の配置を行う
 
         ObjGoodsControll = this.transform.Find(Const.CO.GoodsControllObjectPass).gameObject;
-
+       
         foreach (Transform child in ObjGoodsControll.transform)
         {
             ObjGoodsControll.GetComponent<GoodsStateDisplayUpdateScript>().StateUpdate_ALL(
@@ -210,7 +229,7 @@ public class GameControllerScript : MonoBehaviour
     public void Update()
     {
 
-
+        
         //アニメーション中でない場合、体力を1秒ごとに「経過日数に応じた値 + 1」減少
         if (!ObjGoodsControll.GetComponent<AnimationEndScript>().blAnimation && !blGameFinish)
         {
@@ -263,7 +282,7 @@ public class GameControllerScript : MonoBehaviour
         ObjRestPhysicalText.GetComponent<TextMeshProUGUI>().text = Const.CO.PlayerPhysicalName+"：" + Physical;
         
         //更新した日付を画面に表示
-        ObjYearText.GetComponent<TextMeshProUGUI>().text = CurrentDay.Year.ToString()+"年";
+        //ObjYearText.GetComponent<TextMeshProUGUI>().text = CurrentDay.Year.ToString()+"年";
         ObjMonthText.GetComponent<TextMeshProUGUI>().text = CurrentDay.Month.ToString() + "月";
         ObjDayText.GetComponent<TextMeshProUGUI>().text = CurrentDay.Day.ToString() + "日";
 
