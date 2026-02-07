@@ -391,12 +391,12 @@ public class GameControllerScript : MonoBehaviour
         List<string> ScoreList = new List<string>
         {
             CountDay.ToString(),
-            IntGetMoney.ToString(),
+            /*IntGetMoney.ToString(),*/
             IntUseMoney.ToString(),
             IntGetMental.ToString(),
-            IntUseMental.ToString(),
+            /*IntUseMental.ToString(),*/
             IntGetPhysical.ToString(),
-            IntUsePhysical.ToString(),
+            /*IntUsePhysical.ToString(),*/
             intScore.ToString(),
             ScoreRankCal(intScore)
         };
@@ -440,6 +440,9 @@ public class GameControllerScript : MonoBehaviour
         intScore += (int)(0.1f * IntGetMental);
         //取得体力×10%(少数点以下切り捨て)
         intScore += (int)(0.1f * IntGetPhysical);
+
+        //経過日数ボーナス(経過日数10% + 1をかける)
+        intScore = intScore * ((CountDay / 10) + 1);
 
         return intScore;
     }

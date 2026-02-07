@@ -196,13 +196,13 @@ namespace Const
 
         #region スコアのリスト
         public static List<Score> ScoreList = new List<Score> {
-            new Score().SetStatus(ScoreDayTextPass,"経過日数：<変数>日"),
-            new Score().SetStatus(ScoreGetSalaryTextPass,"取得金額：<変数>円"),
-            new Score().SetStatus(ScoreUseSalaryTextPass,"消費金額：<変数>円"),
-            new Score().SetStatus(ScoreGetMentalTextPass,"取得精神力：<変数>"),
-            new Score().SetStatus(ScoreUseMentalTextPass,"消費精神力：<変数>"),
-            new Score().SetStatus(ScoreGetPhysicalTextPass,"取得体力：<変数>"),
-            new Score().SetStatus(ScoreUsePhysicalTextPass, "消費体力：<変数>"),
+            new Score().SetStatus(ScoreDayTextPass,"経過日数\n<変数>日"),
+            /*new Score().SetStatus(ScoreGetSalaryTextPass,"累計取得金額：<変数>円"),*/
+            new Score().SetStatus(ScoreUseSalaryTextPass,"累計消費金額\n<変数>円"),
+            new Score().SetStatus(ScoreGetMentalTextPass,"累計取得精神力\n<変数>"),
+            /*new Score().SetStatus(ScoreUseMentalTextPass,"累計消費精神力：<変数>"),*/
+            new Score().SetStatus(ScoreGetPhysicalTextPass,"累計取得体力\n<変数>"),
+            /*new Score().SetStatus(ScoreUsePhysicalTextPass, "累計消費体力：<変数>"),*/
             new Score().SetStatus(ScoreNumberTextPass, "<変数>点"),
             new Score().SetStatus(ScoreRankTextPass, "<変数>")
             };//商品を格納しているリスト
