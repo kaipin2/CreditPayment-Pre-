@@ -10,16 +10,37 @@ public class ClickButtonScript : MonoBehaviour
     [SerializeField]
     private AudioClip aucInsert; //カードを挿入する音
 
+    private string strJumpScene; //ジャンプするシーン
+    private bool blCanJump; //シーンジャンプできるか判定する関数
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        blCanJump = false; //初期化
     }
 
     // Update is called once per frame
     void Update()
     {
+        //ジャンプ可能で音声が再生終了している場合
+        if (blCanJump && !this.GetComponent<AudioSource>().isPlaying)
+        {
+            switch (strJumpScene )
+            {
+                case "Main":
+                    SceneManager.LoadScene(Const.CO.MainGameScene);
+                    break;
+                case "Title":
+                    SceneManager.LoadScene(Const.CO.TitleScene);
+                    break;
+                case "Demo":
+                    SceneManager.LoadScene("DemoScene");
+                    break;
+                case "HowToPlay":
+                    SceneManager.LoadScene(Const.CO.HowToPlayScene);
+                    break;
+            }
+        }
         
     }
 
@@ -32,8 +53,10 @@ public class ClickButtonScript : MonoBehaviour
         this.GetComponent<AudioSource>().PlayOneShot(aucClick);
         //クレジットカードを挿入するアニメーションを再生
         this.GetComponent<Animator>().Play(Const.CO.TitleCreditAnime);
+        blCanJump = true; //ジャンプ可能に変更
+
         //アニメーションが終わった後のMainシーンに移動するようにアニメーターで設定
-        
+
     }
 
     //アニメーション途中でATMにカードを挿入する時の音を再生
@@ -44,23 +67,11 @@ public class ClickButtonScript : MonoBehaviour
     //シーンジャンプする関数
     public void JumpScene(string Scene)
     {
-        //クリック音を再生
-        this.GetComponent<AudioSource>().PlayOneShot(aucClick);
-        switch (Scene)
-        {
-            case "Main":
-                SceneManager.LoadScene(Const.CO.MainGameScene);
-                break;
-            case "Title":
-                SceneManager.LoadScene(Const.CO.TitleScene);
-                break;
-            case "Demo":
-                SceneManager.LoadScene("DemoScene");
-                break;
-            case "HowToPlay":
-                SceneManager.LoadScene(Const.CO.HowToPlayScene);
-                break;
-        }
+        //他でジャンプ判定していない場合クリック音を再生
+        if(!blCanJump) this.GetComponent<AudioSource>().PlayOneShot(aucClick);
+        
+        strJumpScene = Scene; //シーンを設定
+        blCanJump = true; //ジャンプ可能に変更
         
     }
 }

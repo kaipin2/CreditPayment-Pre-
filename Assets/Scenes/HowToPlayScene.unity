@@ -4570,7 +4570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d21c06f0a95334d9b63236f5c25429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickButtonScript
-  aucClick: {fileID: 8300000, guid: c7b1d7c4c3696c54cb41e0927e278161, type: 3}
+  aucClick: {fileID: 8300000, guid: 80b6cdd790540434fa94ca36ac4b99b5, type: 3}
   aucInsert: {fileID: 0}
 --- !u!114 &1539605245
 MonoBehaviour:
