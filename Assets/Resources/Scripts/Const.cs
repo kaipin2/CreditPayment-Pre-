@@ -112,6 +112,11 @@ namespace Const
         public static Color MinusColor = new Color(255, 0, 0, 255);
         //数字がゼロの時のテキストカラー
         public static Color ZeroColor = new Color(255, 255, 255, 255);
+        
+        //操作説明画面の背景色(黒)
+        public static Color BlackBackColor = new Color(0, 0, 0, 0.78f); //(0,0,0,200)
+        //操作説明画面の背景色(透明)
+        public static Color ClearBackColor = new Color(0, 0, 0, 0); //(0,0,0,0)
         //精神力に作用する背景色
         public static Color MentalBackColor = new Color(1f, 0.56f, 0.56f, 1f); //(255,143,143,255)
         //体力に作用する背景色
@@ -143,12 +148,20 @@ namespace Const
         public static string ScoreUsePhysicalTextPass = "UsePhysicalText"; //最終スコア(消費体力)テキスト、FinishPanelとの相対位置
         public static string ScoreNumberTextPass = "ScoreNumberText"; //最終スコア(点数)テキスト、FinishPanelとの相対位置
         public static string ScoreRankTextPass = "ScoreRankText"; //最終スコア(ランク)テキスト、FinishPanelとの相対位置
+
+        public static string ExplanationTextPass = "TextCanvas/ExplanationText"; //説明テキスト、PaperFrameとの相対位置
         #endregion
 
         #region ゲーム上のステータス名
         public static string PlayerMoneyName = "残金"; //プレイヤーの残高に関するステータス名
         public static string PlayerMentalName = "精神力"; //プレイヤーの精神力に関するステータス名
         public static string PlayerPhysicalName = "体力"; //プレイヤーの体力に関するステータス名
+        #endregion
+
+        #region ゲーム上のステータス画像サイズ
+        public static Vector2 PlayerMoneySize = new Vector2(0.4f,0.4f); //プレイヤーの残高に関するステータス名
+        public static Vector2 PlayerMentalSize = new Vector2(1f, 1f); //プレイヤーの精神力に関するステータス名
+        public static Vector2 PlayerPhysicalSize = new Vector2(1f, 1f); //プレイヤーの体力に関するステータス名
         #endregion
 
         #region イメージ画像名
@@ -158,7 +171,7 @@ namespace Const
         public static string MoneyImageName = "Money"; //商品のステータス(金額)を表示するための画像名
         public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス、Resourcesからの相対パス
         #endregion
-
+        
         #region Audio保存場所
         public static string BMGListPass = "Audio/BGM/"; //BGMを格納しているパス、Resourcesからの相対パス
         #endregion
@@ -185,7 +198,7 @@ namespace Const
         public static List<Score> ScoreList = new List<Score> {
             new Score().SetStatus(ScoreDayTextPass,"経過日数：<変数>日"),
             new Score().SetStatus(ScoreGetSalaryTextPass,"取得金額：<変数>円"),
-            new Score().SetStatus(ScoreUseSalaryTextPass,"購入金額：<変数>円"),
+            new Score().SetStatus(ScoreUseSalaryTextPass,"消費金額：<変数>円"),
             new Score().SetStatus(ScoreGetMentalTextPass,"取得精神力：<変数>"),
             new Score().SetStatus(ScoreUseMentalTextPass,"消費精神力：<変数>"),
             new Score().SetStatus(ScoreGetPhysicalTextPass,"取得体力：<変数>"),

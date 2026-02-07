@@ -67,30 +67,36 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     //効果タイプのステータスを更新する
     public void StateUpdate_EffectType(Transform TargetGoods,string strEffectType)
     {
+        //画像を設定するオブジェクトを取得
+        GameObject objEffectImage = TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject;
+        //画像のコンポーネントを取得
+        SpriteRenderer sprEffectType = objEffectImage.GetComponent<SpriteRenderer>();
         
-        SpriteRenderer sprEffectType = TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.GetComponent<SpriteRenderer>();
-        //大きさを調整
-        TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.transform.localScale = new Vector2(1f, 1f);
-
+        
         //体力か精神力かで表示する画像を変更
         if (strEffectType == Const.CO.PlayerMentalName)
         {
             //精神力を設定
             sprEffectType.sprite = sprMental;
             GoodsBackColor(TargetGoods,Const.CO.MentalBackColor);
+            //画像大きさを調整
+            objEffectImage.transform.localScale = Const.CO.PlayerMentalSize;
         }
         else if(strEffectType == Const.CO.PlayerPhysicalName)
         {
             //体力を設定
             sprEffectType.sprite = sprPhysical;
             GoodsBackColor(TargetGoods,Const.CO.PhysicalBackColor);
-        }else if (strEffectType == Const.CO.PlayerMoneyName)
+            //画像大きさを調整
+            objEffectImage.transform.localScale = Const.CO.PlayerPhysicalSize;
+        }
+        else if (strEffectType == Const.CO.PlayerMoneyName)
         {
             //体力を設定
             sprEffectType.sprite = sprMoney;
             GoodsBackColor(TargetGoods, Const.CO.MoneyBackColor);
-            //大きさを調整
-            TargetGoods.transform.Find(Const.CO.GoodsEffectTypeImagePass).gameObject.transform.localScale = new Vector2(0.4f, 0.4f);
+            //画像大きさを調整
+            objEffectImage.transform.localScale = Const.CO.PlayerMoneySize;
         }
     }
     //効果量のステータスを更新する

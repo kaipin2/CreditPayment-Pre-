@@ -44,7 +44,8 @@ public class ClickButtonScript : MonoBehaviour
     //シーンジャンプする関数
     public void JumpScene(string Scene)
     {
-        Debug.Log("Click");
+        //クリック音を再生
+        this.GetComponent<AudioSource>().PlayOneShot(aucClick);
         switch (Scene)
         {
             case "Main":
