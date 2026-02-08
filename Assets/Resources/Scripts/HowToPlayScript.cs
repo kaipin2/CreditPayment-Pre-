@@ -68,7 +68,7 @@ public class HowToPlayScript : MonoBehaviour
             new Vector2(-2f,1.3f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
             new Vector2(0,-0.7f),new Vector2(1.95f,1f)
             ),
-        new Explanation().SetStatus("１つ商品を購入すると\n1日経過します",new Vector2(0,0.89f),
+        new Explanation().SetStatus("1つ商品を購入すると\n1日経過します",new Vector2(0,0.89f),
             new Vector2(-1.83f,2.95f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,45f),
             new Vector2(-2.34f,4.27f),new Vector2(0.4f,0.5f)
             ),

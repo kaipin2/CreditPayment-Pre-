@@ -27,6 +27,7 @@ public class AnimationEndScript : MonoBehaviour
     //商品が画面外に出ていくアニメーション終了時に実行
     public void OutGoodsAnimationEnd()
     {
+        Resources.UnloadUnusedAssets(); //メモリ開放
 
         foreach (Transform child in this.gameObject.transform)
         {
