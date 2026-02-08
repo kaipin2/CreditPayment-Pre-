@@ -47,10 +47,11 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     public void StateUpdate_Image(Transform TargetGoods, string stringImageName,Vector2 vec2ImageSize)
     {
         //商品画像を取得
-        Sprite spImage = Resources.Load<Sprite>(Const.CO.GoodsImageListPass + stringImageName);
+        Sprite spImage = Resources.LoadAll<Sprite>(Const.CO.GoodsImageListPass + Const.CO.ImageListName)[int.Parse(stringImageName)];
         //商品画像を表示するオブジェクトを取得
         GameObject objGoodsImage = TargetGoods.transform.Find(Const.CO.GoodsImagePass).gameObject;
         objGoodsImage.GetComponent<SpriteRenderer>().sprite = spImage; //商品画像更新
+        Debug.Log($"spImage:{spImage}、stringImageName：{stringImageName}");
         objGoodsImage.transform.localScale = vec2ImageSize; //商品サイズ更新
         
     }

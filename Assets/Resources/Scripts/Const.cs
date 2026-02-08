@@ -175,22 +175,27 @@ namespace Const
         #region Audio保存場所
         public static string BMGListPass = "Audio/BGM/"; //BGMを格納しているパス、Resourcesからの相対パス
         #endregion
+        
         #region ランダム効果商品
         public static string RandomEffectSizeText = "?"; //増加ステータスが決まっていない商品の表示
+        #endregion
+        
+        #region 商品画像リスト名
+        public static string ImageListName = "Goods_Sprite";//商品画像をまとめている画像名
         #endregion
 
         #region 商品のリスト(ランダム効果は0で表示)
         public static List<Goods> GoodsList = new List<Goods>() {
-            new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "Onigiri", new Vector2(80,66)),
-            new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "Sandwich", new Vector2(80, 66)),
-            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 10, "NintendoSwitch", new Vector2(80, 66)),
-            new Goods().SetStatus("本", 100, PlayerMentalName, 1, "Book", new Vector2(40, 33)),
-            new Goods().SetStatus("ステーキ", 1000, PlayerPhysicalName, 8, "Steak", new Vector2(100, 83)),
-            new Goods().SetStatus("音楽", 250, PlayerMentalName, 2, "Music", new Vector2(100, 100)),
-            new Goods().SetStatus("寝具", 500, PlayerMentalName, 3, "Bedding", new Vector2(100, 100)),
-            new Goods().SetStatus("占い", 0, PlayerMentalName, 0, "Crystal", new Vector2(60, 50)),
-            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 10, "All-you-can-eat", new Vector2(110, 91)),
-            new Goods().SetStatus("宝くじ", 0, PlayerMoneyName, 0, "Lottery", new Vector2(60, 60)),
+            new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "7", new Vector2(170,150)),
+            new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "8", new Vector2(100, 100)),
+            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 10, "6", new Vector2(170, 170)),
+            new Goods().SetStatus("本", 100, PlayerMentalName, 1, "2", new Vector2(100, 100)),
+            new Goods().SetStatus("ステーキ", 1000, PlayerPhysicalName, 8, "9", new Vector2(120, 120)),
+            new Goods().SetStatus("音楽", 250, PlayerMentalName, 2, "5", new Vector2(170, 170)),
+            new Goods().SetStatus("寝具", 500, PlayerMentalName, 3, "1", new Vector2(100, 100)),
+            new Goods().SetStatus("占い", 0, PlayerMentalName, 0, "3", new Vector2(120, 100)),
+            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 10, "0", new Vector2(100, 100)),
+            new Goods().SetStatus("宝くじ", 0, PlayerMoneyName, 0, "4", new Vector2(140, 140)),
             };//商品を格納しているリスト
         #endregion
 
