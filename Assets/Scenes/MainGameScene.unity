@@ -2871,10 +2871,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.08917835
-    width: 1
-    height: 0.8216433
+    x: 0.32708335
+    y: 0
+    width: 0.34583333
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -4062,13 +4062,13 @@ MonoBehaviour:
   PhysicalPanel: {fileID: 87922567}
   DayPanel: {fileID: 1265983124}
   SettingPanel: {fileID: 444715074}
-  aucStatusTimer: {fileID: 8300000, guid: c7b1d7c4c3696c54cb41e0927e278161, type: 3}
+  aucStatusTimer: {fileID: 8300000, guid: 80b6cdd790540434fa94ca36ac4b99b5, type: 3}
   aucStatusDec: {fileID: 8300000, guid: fef84174280cbf249b9152b2d20a416c, type: 3}
-  aucStatusInc: {fileID: 8300000, guid: 08082899fcab8f44784d2db65c7b1ab2, type: 3}
-  aucMoneyDec: {fileID: 8300000, guid: ad05e477e78529c4793a9fab125590e3, type: 3}
-  aucMoneyInc: {fileID: 8300000, guid: 5d305ad6589cb544fab1cb5836f06c6e, type: 3}
+  aucStatusInc: {fileID: 8300000, guid: 93728c47e065cc042ad340175e7a877a, type: 3}
+  aucMoneyDec: {fileID: 8300000, guid: e4e5b146118a93a43bdb73ce25a09d1a, type: 3}
+  aucMoneyInc: {fileID: 8300000, guid: 527f2bc7168e79544b8b6d975011059e, type: 3}
   aucSelectGoods: {fileID: 8300000, guid: cd72f68114501e743bb195d2e16de60b, type: 3}
-  aucScoreDisplay: {fileID: 8300000, guid: d5ed21667e6c8514bb59e1f889e0782b, type: 3}
+  aucScoreDisplay: {fileID: 8300000, guid: 3f2da1649bb94cd459bdf0f0106a04b2, type: 3}
   ausBGMAudioSource: {fileID: 1499994923}
 --- !u!4 &1499994921
 Transform:

@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d21c06f0a95334d9b63236f5c25429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickButtonScript
-  aucClick: {fileID: 8300000, guid: f77815a0e6e84ac48bb6051e21b55ab1, type: 3}
+  aucClick: {fileID: 8300000, guid: af513b9078cb61c4c9ba7db033ca58d0, type: 3}
   aucInsert: {fileID: 8300000, guid: 15fc09da2df6c5247a602bce9a90e117, type: 3}
 --- !u!114 &3744542
 MonoBehaviour:
@@ -728,9 +728,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.23823977
+    x: 0.32708335
     y: 0
-    width: 0.52352047
+    width: 0.34583333
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -1442,7 +1442,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4d00ca09bb4d0714f84ed05993f2ad9b, type: 3}
+  m_Resource: {fileID: 8300000, guid: fd62514be02163d4393da97031136316, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

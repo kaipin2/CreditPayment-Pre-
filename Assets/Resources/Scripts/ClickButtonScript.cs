@@ -26,7 +26,7 @@ public class ClickButtonScript : MonoBehaviour
         //ジャンプ可能で音声が再生終了している場合
         if (blCanJump && !this.GetComponent<AudioSource>().isPlaying)
         {
-            Resources.UnloadUnusedAssets(); //メモリ開放
+            //Resources.UnloadUnusedAssets(); //メモリ開放
             switch (strJumpScene )
             {
                 case "Main":
