@@ -2969,7 +2969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickButtonScript
   aucClick: {fileID: 8300000, guid: 80b6cdd790540434fa94ca36ac4b99b5, type: 3}
-  aucInsert: {fileID: 0}
+  aucInsert: {fileID: 8300000, guid: 15fc09da2df6c5247a602bce9a90e117, type: 3}
 --- !u!114 &1539605245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3299,9 +3299,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.33708334
+    x: 0.275
     y: 0
-    width: 0.32583332
+    width: 0.45
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

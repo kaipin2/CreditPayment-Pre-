@@ -9,6 +9,8 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using unityroom.Api; //Unityroomにスコアを送信するためのApi
+
 public class GameControllerScript : MonoBehaviour
 {
     [SerializeField]
@@ -413,7 +415,8 @@ public class GameControllerScript : MonoBehaviour
 
             loopindex++;//インクリメント
         }
-
+        //unityroomにハイスコア(降順)として表示
+        UnityroomApiClient.Instance.SendScore(1, intScore, ScoreboardWriteMode.HighScoreDesc);
     }
 
     //スコア表示する関数
