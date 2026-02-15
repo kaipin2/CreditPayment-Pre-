@@ -6,6 +6,9 @@ using Const;  //定数を定義している
 public class AnimationEndScript : MonoBehaviour
 {
     public bool blAnimation; //アニメーション中か判定※他スクリプトでTrueにする
+    [SerializeField]
+    private GameObject objGameController; //ゲームコントローラオブジェクト
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,7 +37,8 @@ public class AnimationEndScript : MonoBehaviour
             //商品のステータスを更新
             this.gameObject.GetComponent<GoodsStateDisplayUpdateScript>().StateUpdate_ALL(
                 child,
-                Const.CO.GoodsList[UnityEngine.Random.Range(0, Const.CO.GoodsList.Count)]);
+                objGameController.GetComponent<GameControllerScript>().GoodsDataList.GoodsList.items[UnityEngine.Random.Range(0, objGameController.GetComponent<GameControllerScript>().GoodsDataList.GoodsList.items.Length)]
+            );
         }
         //商品
         this.gameObject.GetComponent<Animator>().Play(Const.CO.InGoodsAnime);

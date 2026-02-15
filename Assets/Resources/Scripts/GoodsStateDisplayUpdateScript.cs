@@ -2,10 +2,12 @@
 
 using Const;  //定数を定義している
 using System.ComponentModel;
+using System.Linq;
 using TMPro; //名前空間を追加
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GoodsStateDisplayUpdateScript : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     private Sprite sprPhysical; //体力を表示する画像
     [SerializeField]
     private Sprite sprMoney; //お金を表示する画像
+    [SerializeField]
+    private GameObject objGameController; //ゲームコントローラオブジェクト
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,13 +33,13 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     }
 
     //すべてのステータスを更新する
-    public void StateUpdate_ALL(Transform TargetGoods, Goods goods)
+    public void StateUpdate_ALL(Transform TargetGoods, Item goods)
     {
-        StateUpdate_Name(TargetGoods, goods.GetName());
-        StateUpdate_Image(TargetGoods, goods.GetImageName(), goods.GetImageSize());
-        StateUpdate_Price(TargetGoods, goods.GetPrice());
-        StateUpdate_EffectType(TargetGoods, goods.GetEffectType());
-        StateUpdate_EffectSize(TargetGoods, goods.GetEffectSize());
+        StateUpdate_Name(TargetGoods, goods.Name);
+        StateUpdate_Image(TargetGoods, goods.ImageSprite, new Vector2(100, 100));
+        StateUpdate_Price(TargetGoods, goods.Price);
+        StateUpdate_EffectType(TargetGoods, goods.EffectType);
+        StateUpdate_EffectSize(TargetGoods, goods.EffectSize == null ? 0 : goods.EffectSize);
     }
     //商品名を更新する
     public void StateUpdate_Name(Transform TargetGoods, string stringName)
@@ -44,15 +48,21 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
         TargetGoods.transform.Find(Const.CO.GoodsNameTextPass).gameObject.GetComponent<TextMeshProUGUI>().text = stringName;
     }
     //商品画像を更新
-    public void StateUpdate_Image(Transform TargetGoods, string stringImageName,Vector2 vec2ImageSize)
+    public void StateUpdate_Image(Transform TargetGoods, Sprite sprImageSprite ,Vector2 vec2ImageSize)
     {
+
         //商品画像を取得
-        Sprite spImage = Resources.LoadAll<Sprite>(Const.CO.GoodsImageListPass + Const.CO.ImageListName)[int.Parse(stringImageName)];
+        //Sprite spImage = Resources.LoadAll<Sprite>(Const.CO.GoodsImageListPass + Const.CO.ImageListName).FirstOrDefault(s=> s.name == stringImageName);
+        
+        
+        //Sprite spImage = Resources.LoadAll<Sprite>(Const.CO.GoodsImageListPass + Const.CO.ImageListName)[int.Parse(stringImageName)];
         //商品画像を表示するオブジェクトを取得
         GameObject objGoodsImage = TargetGoods.transform.Find(Const.CO.GoodsImagePass).gameObject;
-        objGoodsImage.GetComponent<SpriteRenderer>().sprite = spImage; //商品画像更新
+        objGoodsImage.GetComponent<SpriteRenderer>().sprite = sprImageSprite; //商品画像更新
         objGoodsImage.transform.localScale = vec2ImageSize; //商品サイズ更新
-        
+
+        //Sprite spImage = objGameController.GetComponent<AWSDBScript>().sprite;
+
     }
 
     //金額のステータスを更新する
@@ -100,7 +110,7 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
         }
     }
     //効果量のステータスを更新する
-    public void StateUpdate_EffectSize(Transform TargetGoods,int intEffectSize)
+    public void StateUpdate_EffectSize(Transform TargetGoods,int? intEffectSize = 0)
     {
         //効果量をテキスト型に変更
         string strEffectSize = intEffectSize.ToString();

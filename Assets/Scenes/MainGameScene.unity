@@ -2293,6 +2293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationEndScript
   blAnimation: 0
+  objGameController: {fileID: 1499994919}
 --- !u!114 &637418541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2308,6 +2309,7 @@ MonoBehaviour:
   sprMental: {fileID: 4606908045521496030, guid: 09c7ea847224c364aad90fb8401c1cbb, type: 3}
   sprPhysical: {fileID: -5044410395184963560, guid: 83d32a4653a1cb64cabdb14516f0c8e2, type: 3}
   sprMoney: {fileID: 5670732621190257608, guid: 488c93fa3aea31c48a1c5ac779844611, type: 3}
+  objGameController: {fileID: 1499994919}
 --- !u!224 &688596097 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5430348242766938282, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
@@ -2724,9 +2726,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.32708335
+    x: 0.34968752
     y: 0
-    width: 0.34583333
+    width: 0.300625
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -3923,6 +3925,7 @@ MonoBehaviour:
   aucSelectGoods: {fileID: 8300000, guid: cd72f68114501e743bb195d2e16de60b, type: 3}
   aucScoreDisplay: {fileID: 8300000, guid: 3f2da1649bb94cd459bdf0f0106a04b2, type: 3}
   ausBGMAudioSource: {fileID: 1499994923}
+  GoodsDataList: {fileID: 11400000, guid: 116c144f21fb51e43a254f9a9e67b7b8, type: 2}
 --- !u!4 &1499994921
 Transform:
   m_ObjectHideFlags: 0
@@ -4485,6 +4488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoodsPanel_C
       objectReference: {fileID: 0}
+    - target: {fileID: 4427033878314304170, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8732658498580170464, guid: 4311a54a0a2bb6948a8eac63e283c8a5, type: 3}
     - target: {fileID: 5430348242766938282, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5046,6 +5053,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoodsPanel_R
       objectReference: {fileID: 0}
+    - target: {fileID: 4427033878314304170, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8732658498580170464, guid: 4311a54a0a2bb6948a8eac63e283c8a5, type: 3}
     - target: {fileID: 5430348242766938282, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5695,6 +5706,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoodsPanel_L
       objectReference: {fileID: 0}
+    - target: {fileID: 4427033878314304170, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8732658498580170464, guid: 4311a54a0a2bb6948a8eac63e283c8a5, type: 3}
     - target: {fileID: 4923081995045508792, guid: e298ea16b6970e44da86dd8fe5c1a20b, type: 3}
       propertyPath: m_LocalScale.x
       value: 100

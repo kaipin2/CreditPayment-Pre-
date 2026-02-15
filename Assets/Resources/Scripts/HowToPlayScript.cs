@@ -66,39 +66,39 @@ public class HowToPlayScript : MonoBehaviour
             ),
         new Explanation().SetStatus("3つの商品の中から\n好きなものをクリックして購入",new Vector2(0,3.5f),
             new Vector2(-2f,1.3f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
-            new Vector2(0,-0.7f),new Vector2(1.95f,1f)
+            new Vector2(0,-0.7f),new Vector2(2.3f,0.925f)
             ),
         new Explanation().SetStatus("1つ商品を購入すると\n1日経過します",new Vector2(0,0.89f),
-            new Vector2(-1.83f,2.95f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,45f),
-            new Vector2(-2.34f,4.27f),new Vector2(0.4f,0.5f)
+            new Vector2(-2.1f,3.4f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,45f),
+            new Vector2(-2.85f,5.2f),new Vector2(0.5f,0.65f)
             ),
         new Explanation().SetStatus("商品を購入すると金額分\nクレジット使用量がたまります",new Vector2(0,-0.5f),
-            new Vector2(-1f,2.35f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
-            new Vector2(0,1.05f),new Vector2(2f,0.5f)
+            new Vector2(-1f,2.58f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
+            new Vector2(0,1.3f),new Vector2(2.35f,0.5f)
             ),
         new Explanation().SetStatus("購入すると記載されている\nステータス分上昇します",new Vector2(0,1.25f),
-            new Vector2(-0.93f,-0.5f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
-            new Vector2(0,-1.51f),new Vector2(1.95f,0.3f)
+            new Vector2(-0.93f,-0.74f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
+            new Vector2(0,-1.85f),new Vector2(2.3f,0.3f)
             ),
         new Explanation().SetStatus("?は数値がランダムで\n減少する可能性もあります",new Vector2(0,1.25f),
-            new Vector2(1.14f,-0.62f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
-            new Vector2(2f,-1.57f),new Vector2(0.55f,0.2f)
+            new Vector2(1.36f,-0.86f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,-60f),
+            new Vector2(2.5f,-1.87f),new Vector2(0.55f,0.2f)
             ),
         new Explanation().SetStatus("購入金額以外は購入時に\n即時反映されます",new Vector2(0,-0.5f),
-            new Vector2(0.29f,1.6f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,45f),
-            new Vector2(1.14f,3.66f),new Vector2(1.2f,1.2f)
+            new Vector2(0.29f,1.77f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,45f),
+            new Vector2(1.32f,4.49f),new Vector2(1.5f,1.3f)
             ),
         new Explanation().SetStatus("体力は時間経過で、精神力は\n経過日付で減少していきます",new Vector2(0,-0.5f),
-            new Vector2(0.29f,1.6f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,45f),
-            new Vector2(1.14f,3.29f),new Vector2(1.2f,0.8f)
+            new Vector2(0.29f,1.77f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,0f,45f),
+            new Vector2(1.34f,3.95f),new Vector2(1.5f,0.93f)
             ),
         new Explanation().SetStatus("購入金額は引き落とし日に\nまとめて反映されます",new Vector2(0,-0.98f),
-            new Vector2(0.67f,-2.76f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,-60f),
-            new Vector2(-1.05f,-3.84f),new Vector2(1.3f,0.5f)
+            new Vector2(1.02f,-3.66f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,-60f),
+            new Vector2(-1.11f,-5.07f),new Vector2(1.6f,0.6f)
             ),
         new Explanation().SetStatus("給料日になると\n残高が増加します",new Vector2(0,-0.98f),
-            new Vector2(-0.07f,-4.39f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,45f),
-            new Vector2(-1.05f,-2.73f),new Vector2(1.3f,0.5f)
+            new Vector2(0.35f,-5.26f),new Vector2(0.375f,0.375f),Quaternion.Euler(0f,-180f,45f),
+            new Vector2(-1.11f,-3.76f),new Vector2(1.6f,0.6f)
             ),
         new Explanation().SetStatus("ステータスをマイナスにせず\n生き残り続けましょう",new Vector2(0,0f),
             new Vector2(0,0),new Vector2(0,0),Quaternion.Euler(0f, 0f, 0f),

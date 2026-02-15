@@ -2,54 +2,26 @@ using UnityEngine;
 using System.Collections.Generic;
 
 namespace Const
-{ 
-    //商品のクラスを生成
-    public  class Goods
+{
+    //AWSのDBから取得してくるデータ型
+    [System.Serializable]
+    public class Item
     {
-        private string strName; //商品名
-        private int intPrice; //商品の金額
-        private string strEffectType; //商品の効果種類
-        private int intEffectSize; //商品の効果
-        private string strImageName; //商品画像名
-        private Vector2 vec2ImageSize; //商品画像サイズ
-
-        //商品のステータスを設定する
-        public Goods SetStatus(string argstrName,int argintPrize, string argstrEffectType, int argintEffectSize,string argstrImageName,Vector2 argvec2ImageSize)
-        {
-            strName = argstrName;
-            strImageName = argstrImageName;
-            vec2ImageSize = argvec2ImageSize;
-            intPrice =argintPrize;
-            strEffectType=argstrEffectType;
-            intEffectSize=argintEffectSize;
-            return this;
-        }
-        //商品のステータスを取得する
-        public string GetName()
-        {
-            return this.strName;
-        }
-        public string GetImageName()
-        {
-            return this.strImageName;
-        }
-        public Vector2 GetImageSize()
-        {
-            return this.vec2ImageSize;
-        }
-        public int GetPrice()
-        {
-            return this.intPrice;
-        }
-        public string GetEffectType()
-        {
-            return this.strEffectType;
-        }
-        public int GetEffectSize()
-        {
-            return this.intEffectSize;
-        }
+        public int Id;
+        public string Name;
+        public int Price;
+        public string EffectType;
+        public int? EffectSize;
+        public string ImageURL;
+        public Sprite ImageSprite;
     }
+    
+    [System.Serializable]
+    public class ItemList
+    {
+        public Item[] items;
+    }
+
 
     //スコアのクラスを生成
     public class Score
@@ -169,7 +141,7 @@ namespace Const
         public static string MentalImageName = "Heart"; //プレイヤーの精神力を表示するための画像名
         public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
         public static string MoneyImageName = "Money"; //商品のステータス(金額)を表示するための画像名
-        public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス、Resourcesからの相対パス
+        //public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス、Resourcesからの相対パス
         #endregion
         
         #region Audio保存場所
@@ -179,11 +151,11 @@ namespace Const
         #region ランダム効果商品
         public static string RandomEffectSizeText = "?"; //増加ステータスが決まっていない商品の表示
         #endregion
-        
+        /*
         #region 商品画像リスト名
         public static string ImageListName = "Goods_Sprite";//商品画像をまとめている画像名
         #endregion
-
+        
         #region 商品のリスト(ランダム効果は0で表示)
         public static List<Goods> GoodsList = new List<Goods>() {
             new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "7", new Vector2(170,150)),
@@ -198,7 +170,7 @@ namespace Const
             new Goods().SetStatus("宝くじ", 0, PlayerMoneyName, 0, "4", new Vector2(140, 140)),
             };//商品を格納しているリスト
         #endregion
-
+        */
         #region スコアのリスト
         public static List<Score> ScoreList = new List<Score> {
             new Score().SetStatus(ScoreDayTextPass,"経過日数\n<変数>日"),

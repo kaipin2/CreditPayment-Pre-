@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 3744544}
   - component: {fileID: 3744546}
   - component: {fileID: 3744547}
+  - component: {fileID: 3744548}
   m_Layer: 0
   m_Name: JCB_CreditCard_0
   m_TagString: Untagged
@@ -550,6 +551,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3744548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd65fbef40429c4a960322647d88e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AWSDBScript
+  GoodsDataList: {fileID: 11400000, guid: 116c144f21fb51e43a254f9a9e67b7b8, type: 2}
 --- !u!1 &4574255
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,9 +742,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.32708335
+    x: 0.3571779
     y: 0
-    width: 0.34583333
+    width: 0.28564417
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

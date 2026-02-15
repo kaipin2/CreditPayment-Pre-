@@ -1,7 +1,9 @@
 //ゲームで使用する変数やゲーム状況を監視するスクリプト
 using Const;//定数を定義している
+using NUnit.Framework;
 using NUnit.Framework.Internal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -81,6 +83,7 @@ public class GameControllerScript : MonoBehaviour
     private float Span = 1f; // リセット間隔
     private bool blGameFinish = false; //ゲームが終了しているか格納する関数
 
+    public GoodsData GoodsDataList;
     #region Public関数
     //商品選択音を返す関数
     public AudioClip GetSelectGoodsSE()
@@ -147,7 +150,7 @@ public class GameControllerScript : MonoBehaviour
     }
     #endregion
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+     private void Start()
     {
         #region TextObject取得
         ObjChangeMoneyText = MoneyPanel.transform.Find(Const.CO.PlayerStatusChangeTextPass).gameObject;
@@ -209,16 +212,23 @@ public class GameControllerScript : MonoBehaviour
 
         FinishPanel.GetComponent<Canvas>().enabled = false; // 終了画面を非表示
 
+
+        //商品リストをAWSから取得
+        //yield return StartCoroutine(this.GetComponent<AWSDBScript>().GetGoodsList());
+
+
         //商品の配置を行う
 
         ObjGoodsControll = this.transform.Find(Const.CO.GoodsControllObjectPass).gameObject;
        
+
         foreach (Transform child in ObjGoodsControll.transform)
         {
             ObjGoodsControll.GetComponent<GoodsStateDisplayUpdateScript>().StateUpdate_ALL(
                 child,
-                Const.CO.GoodsList[UnityEngine.Random.Range(0, UnityEngine.Random.Range(0, Const.CO.GoodsList.Count))]
+                GoodsDataList.GoodsList.items[UnityEngine.Random.Range(0, GoodsDataList.GoodsList.items.Length)]
             );
+
         }
 
         //初期ステータスを画面に表示

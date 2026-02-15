@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76900e485436d64bba78afa9f952175, type: 3}
+  m_Name: GoodsDataAsset
+  m_EditorClassIdentifier: Assembly-CSharp::GoodsData
+  GoodsList:
+    items:
+    - Id: 1
+      Name: "\u304A\u306B\u304E\u308A"
+      Price: 300
+      EffectType: "\u4F53\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Onigiri.png
+      ImageSprite: {fileID: 0}
+    - Id: 2
+      Name: "\u30B5\u30F3\u30C9\u30A4\u30C3\u30C1"
+      Price: 180
+      EffectType: "\u4F53\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Sandwich.png
+      ImageSprite: {fileID: 0}
+    - Id: 3
+      Name: "\u30B2\u30FC\u30E0\u6A5F"
+      Price: 3000
+      EffectType: "\u7CBE\u795E\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/NintendoSwitch.png
+      ImageSprite: {fileID: 0}
+    - Id: 4
+      Name: "\u672C"
+      Price: 100
+      EffectType: "\u7CBE\u795E\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Book.png
+      ImageSprite: {fileID: 0}
+    - Id: 5
+      Name: "\u30B9\u30C6\u30FC\u30AD"
+      Price: 1000
+      EffectType: "\u4F53\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Steak.png
+      ImageSprite: {fileID: 0}
+    - Id: 6
+      Name: "\u97F3\u697D"
+      Price: 250
+      EffectType: "\u7CBE\u795E\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Music.png
+      ImageSprite: {fileID: 0}
+    - Id: 7
+      Name: "\u5BDD\u5177"
+      Price: 500
+      EffectType: "\u7CBE\u795E\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Bedding.png
+      ImageSprite: {fileID: 0}
+    - Id: 8
+      Name: "\u98DF\u3079\u653E\u984C"
+      Price: 1600
+      EffectType: "\u4F53\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/All-You-Can-Eat.png
+      ImageSprite: {fileID: 0}
+    - Id: 9
+      Name: "\u5360\u3044"
+      Price: 0
+      EffectType: "\u7CBE\u795E\u529B"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Crystal.png
+      ImageSprite: {fileID: 0}
+    - Id: 10
+      Name: "\u5B9D\u304F\u3058"
+      Price: 0
+      EffectType: "\u6B8B\u91D1"
+      ImageURL: https://creditpayment-images.s3.ap-southeast-2.amazonaws.com/Lottery.png
+      ImageSprite: {fileID: 0}
