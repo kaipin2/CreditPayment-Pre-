@@ -17,9 +17,7 @@ public class AWSDBScript : MonoBehaviour
 
     public IEnumerator GetGoodsList()
     {
-        //まだAWSからデータを取得していない場合、取得処理を実行
-        if (GoodsDataList.GoodsList.items[0].ImageSprite == null)
-        {
+
             string apiUrl = "https://creditpayment-api.duckdns.org/index.php";// PHPスクリプトのURL
 
             UnityWebRequest request = UnityWebRequest.Get(apiUrl);
@@ -47,14 +45,8 @@ public class AWSDBScript : MonoBehaviour
             {
                 yield return GetGoodsImage(item, item.ImageURL);
             }
-        }
-        else
-        {
-            Debug.Log(GoodsDataList.GoodsList.items.Length);
-        }
-
-        
     }
+
 
 
     //DBから画像を取得する
