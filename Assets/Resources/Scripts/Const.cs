@@ -3,17 +3,41 @@ using System.Collections.Generic;
 
 namespace Const
 {
+    //商品のクラスを生成（Localdata用）
+    public class Goods
+    {
+        public string strName; //商品名
+        public int intPrice; //商品の金額
+        public string strEffectType; //商品の効果種類
+        public int intEffectSize; //商品の効果
+        public string strImageName; //商品画像名
+        public Vector2 vec2ImageSize; //商品画像サイズ
+
+        //商品のステータスを設定する
+        public Goods SetStatus(string argstrName, int argintPrize, string argstrEffectType, int argintEffectSize, string argstrImageName, Vector2 argvec2ImageSize)
+        {
+            strName = argstrName;
+            strImageName = argstrImageName;
+            vec2ImageSize = argvec2ImageSize;
+            intPrice = argintPrize;
+            strEffectType = argstrEffectType;
+            intEffectSize = argintEffectSize;
+            return this;
+        }
+    }
+
     //AWSのDBから取得してくるデータ型
     [System.Serializable]
     public class Item
     {
-        public int Id;
-        public string Name;
-        public int Price;
-        public string EffectType;
-        public int? EffectSize;
-        public string ImageURL;
-        public Sprite ImageSprite;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public string EffectType { get; set; }
+        public int? EffectSize { get; set; }
+        public string ImageURL { get; set; }
+        public Sprite ImageSprite { get; set; }
+        public Vector2 ImageSlace { get; set; }
     }
     
     [System.Serializable]
@@ -141,7 +165,7 @@ namespace Const
         public static string MentalImageName = "Heart"; //プレイヤーの精神力を表示するための画像名
         public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
         public static string MoneyImageName = "Money"; //商品のステータス(金額)を表示するための画像名
-        //public static string GoodsImageListPass = "Images/Goods/"; //商品画像を格納しているパス、Resourcesからの相対パス
+        public static string GoodsImageListPass = "Images/"; //商品画像を格納しているパス、Resourcesからの相対パス
         #endregion
         
         #region Audio保存場所
@@ -151,26 +175,26 @@ namespace Const
         #region ランダム効果商品
         public static string RandomEffectSizeText = "?"; //増加ステータスが決まっていない商品の表示
         #endregion
-        /*
+        
         #region 商品画像リスト名
         public static string ImageListName = "Goods_Sprite";//商品画像をまとめている画像名
         #endregion
         
         #region 商品のリスト(ランダム効果は0で表示)
         public static List<Goods> GoodsList = new List<Goods>() {
-            new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "7", new Vector2(170,150)),
-            new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "8", new Vector2(100, 100)),
-            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 10, "6", new Vector2(170, 170)),
-            new Goods().SetStatus("本", 100, PlayerMentalName, 1, "2", new Vector2(100, 100)),
-            new Goods().SetStatus("ステーキ", 1000, PlayerPhysicalName, 8, "9", new Vector2(120, 120)),
-            new Goods().SetStatus("音楽", 250, PlayerMentalName, 2, "5", new Vector2(170, 170)),
-            new Goods().SetStatus("寝具", 500, PlayerMentalName, 3, "1", new Vector2(100, 100)),
-            new Goods().SetStatus("占い", 0, PlayerMentalName, 0, "3", new Vector2(120, 100)),
-            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 10, "0", new Vector2(100, 100)),
-            new Goods().SetStatus("宝くじ", 0, PlayerMoneyName, 0, "4", new Vector2(140, 140)),
+            new Goods().SetStatus("おにぎり", 300, PlayerPhysicalName, 4, "Onigiri", new Vector2(170,150)),
+            new Goods().SetStatus("サンドイッチ", 180, PlayerPhysicalName, 2, "Sandwich", new Vector2(100, 100)),
+            new Goods().SetStatus("ゲーム機", 3000, PlayerMentalName, 10, "NintendoSwitch", new Vector2(170, 170)),
+            new Goods().SetStatus("本", 100, PlayerMentalName, 1, "Book", new Vector2(100, 100)),
+            new Goods().SetStatus("ステーキ", 1000, PlayerPhysicalName, 8, "Steak", new Vector2(120, 120)),
+            new Goods().SetStatus("音楽", 250, PlayerMentalName, 2, "Music", new Vector2(170, 170)),
+            new Goods().SetStatus("寝具", 500, PlayerMentalName, 3, "Bedding", new Vector2(100, 100)),
+            new Goods().SetStatus("占い", 0, PlayerMentalName, 0, "Crystal", new Vector2(120, 100)),
+            new Goods().SetStatus("食べ放題", 1600, PlayerPhysicalName, 10, "All-You-Can-Eat", new Vector2(100, 100)),
+            new Goods().SetStatus("宝くじ", 0, PlayerMoneyName, 0, "Lottery", new Vector2(140, 140)),
             };//商品を格納しているリスト
         #endregion
-        */
+        
         #region スコアのリスト
         public static List<Score> ScoreList = new List<Score> {
             new Score().SetStatus(ScoreDayTextPass,"経過日数\n<変数>日"),

@@ -36,7 +36,7 @@ public class GoodsStateDisplayUpdateScript : MonoBehaviour
     public void StateUpdate_ALL(Transform TargetGoods, Item goods)
     {
         StateUpdate_Name(TargetGoods, goods.Name);
-        StateUpdate_Image(TargetGoods, goods.ImageSprite, new Vector2(100, 100));
+        StateUpdate_Image(TargetGoods, goods.ImageSprite, goods.ImageSlace);
         StateUpdate_Price(TargetGoods, goods.Price);
         StateUpdate_EffectType(TargetGoods, goods.EffectType);
         StateUpdate_EffectSize(TargetGoods, goods.EffectSize == null ? 0 : goods.EffectSize);
