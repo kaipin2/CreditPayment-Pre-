@@ -1042,10 +1042,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: SS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 643baf609b97a1343a3a17ed490e9c50, type: 2}
-  m_sharedMaterial: {fileID: 8565216963165031882, guid: 643baf609b97a1343a3a17ed490e9c50, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: dc8bfb9104a3aed40896d050d3063a4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2537,7 +2537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.03644657, a: 0.8509804}
+  m_Color: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0.8509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2726,9 +2726,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.34968752
+    x: 0.36225045
     y: 0
-    width: 0.300625
+    width: 0.2754991
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

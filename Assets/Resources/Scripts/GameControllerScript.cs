@@ -42,7 +42,7 @@ public class GameControllerScript : MonoBehaviour
     [SerializeField]
     private AudioClip aucScoreDisplay; //スコアの表示音
     [SerializeField]
-    private AudioSource ausBGMAudioSource;　//BGMのAudioSource
+    private AudioSource ausBGMAudioSource; //BGMのAudioSource
 
     private AudioClip[] aucBGMList;　//BGMリスト
     private int IntSalaryDay; // 給料日
@@ -212,15 +212,7 @@ public class GameControllerScript : MonoBehaviour
 
         FinishPanel.GetComponent<Canvas>().enabled = false; // 終了画面を非表示
 
-
-        //商品リストをAWSから取得
-        //yield return StartCoroutine(this.GetComponent<AWSDBScript>().GetGoodsList());
-
-
-        //商品の配置を行う
-
         ObjGoodsControll = this.transform.Find(Const.CO.GoodsControllObjectPass).gameObject;
-       
 
         foreach (Transform child in ObjGoodsControll.transform)
         {
@@ -236,8 +228,9 @@ public class GameControllerScript : MonoBehaviour
 
         //MainのBGMを設定してBGMを再生
         ChengeBGMClip(Const.CO.MainBGM);
-        
-    }
+
+
+     }
     public void Update()
     {
 
@@ -417,14 +410,25 @@ public class GameControllerScript : MonoBehaviour
         int loopindex = 0; //ループ回数を設定
         foreach (Score score in Const.CO.ScoreList)
         {
+            TextMeshProUGUI TextObj = FinishPanel.transform.Find(score.GetScoreTextPass()).gameObject.GetComponent<TextMeshProUGUI>();
             //テキストを画面に表示
             ScoreDisplay(
-            FinishPanel.transform.Find(score.GetScoreTextPass()).gameObject.GetComponent<TextMeshProUGUI>(),
+            TextObj,
             score.GetScoreText(ScoreList[loopindex])
             );
 
+            //最後(スコアランク)を表示する場合
+            if (loopindex == Const.CO.ScoreList.Count-1)
+            {
+                // テクスチャの変更
+                TextObj.fontMaterial.SetTexture("_FaceTex", ScoreRankColor(intScore));
+            }
             loopindex++;//インクリメント
         }
+
+        //スコアに応じたテキスト色
+        ScoreRankColor(intScore);
+
         //unityroomにハイスコア(降順)として表示
         UnityroomApiClient.Instance.SendScore(1, intScore, ScoreboardWriteMode.HighScoreDesc);
     }
@@ -466,12 +470,28 @@ public class GameControllerScript : MonoBehaviour
         string strScoreRank = "";
         for (int Rank = 0;Rank <  Const.CO.RankList.GetLength(0);Rank++){
             
-            if(intScore >= int.Parse(Const.CO.RankList[Rank, 1]))
+            if(intScore >= int.Parse(Const.CO.RankList[Rank].RankSize))
             {
-                strScoreRank = Const.CO.RankList[Rank, 0];
+                strScoreRank = Const.CO.RankList[Rank].Rank;
                 break;
             }
         }
         return strScoreRank;
+    }
+
+    //スコアに応じてテキストの色を変更
+    private Texture ScoreRankColor(int intScore)
+    {
+        Texture RankColortex = default;
+        for (int Rank = 0; Rank < Const.CO.RankList.GetLength(0); Rank++)
+        {
+            if (intScore >= int.Parse(Const.CO.RankList[Rank].RankSize))
+            {
+                RankColortex = Const.CO.RankList[Rank].RankTexture; //テクスチャを設定
+                //商品の配置を行う
+                break;
+            }
+        }
+        return RankColortex;
     }
 }

@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Const
 {
@@ -46,7 +47,21 @@ namespace Const
         public Item[] items;
     }
 
+    //ゲーム上のランクを表示するクラス
+    public class RankText
+    {
+        public  string Rank;
+        public  string RankSize;
+        public  Texture RankTexture;
+        public RankText SetStatus(string argRank, string argRankSize, string argRankTextureName)
+        {
+            Rank = argRank;
+            RankSize = argRankSize;
+            RankTexture = Resources.LoadAll<Texture>(Const.CO.TexturePass).FirstOrDefault(s => s.name == argRankTextureName);
 
+            return this;
+        }
+    }
     //スコアのクラスを生成
     public class Score
     {
@@ -166,8 +181,9 @@ namespace Const
         public static string PhysicalImageName = "Dumbbell"; //プレイヤーの体力力を表示するための画像名
         public static string MoneyImageName = "Money"; //商品のステータス(金額)を表示するための画像名
         public static string GoodsImageListPass = "Images/"; //商品画像を格納しているパス、Resourcesからの相対パス
+        public static string TexturePass = "Texture/"; //テキスト画像を格納しているパス、Resourcesからの相対パス
         #endregion
-        
+
         #region Audio保存場所
         public static string BMGListPass = "Audio/BGM/"; //BGMを格納しているパス、Resourcesからの相対パス
         #endregion
@@ -209,6 +225,7 @@ namespace Const
             };//商品を格納しているリスト
         #endregion
         #region ランク表示
+        /*
         public static string[,] RankList = new string[8, 2] {
                 {"SS","100000" },
                 {"S","800000" },
@@ -218,11 +235,24 @@ namespace Const
                 {"D","8000" },
                 {"E","5000" },
                 {"F","0" },
-            }; //ランク表示を格納しているリスト
+            };
+        */
+        //ランク表示を格納しているリスト
+        public static RankText[] RankList =
+       {
+            new RankText().SetStatus("SS","100000","Rainbow"),
+            new RankText().SetStatus("S","80000","Gold"),
+            new RankText().SetStatus("A","50000","Red"),
+            new RankText().SetStatus("B","30000","Orange"),
+            new RankText().SetStatus("C","10000","Yellow"),
+            new RankText().SetStatus("D","8000","Green"),
+            new RankText().SetStatus("E","5000","Blue"),
+            new RankText().SetStatus("F","0","Gray"),
+        };
         #endregion
 
         #region アニメーション名
-            public static string TitleCreditAnime = "TitleCredit"; //タイトル画面からMain画面に移動するアニメーション名
+        public static string TitleCreditAnime = "TitleCredit"; //タイトル画面からMain画面に移動するアニメーション名
             public static string OutGoodsAnime = "OutGoods"; //商品が画面外に移動するアニメーション名
             public static string InGoodsAnime = "InGoods"; //商品が画面内に移動するアニメーション名
             public static string PlusCahngeStatusAnime = "PlusCahngeStatus"; //プレイヤーのステータスが増加したときに表示するアニメーション名
